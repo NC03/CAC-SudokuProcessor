@@ -125,7 +125,7 @@ public class HistogramGenerator {
         for (int i = 1; i < 10; i++) {
             try {
                 BufferedImage bi = ImageIO.read(new File("Boards/" + i + ".png"));
-                bi = ImageSplicer.splice(bi, 667, 729, 792, 854);
+                bi = ImageUtil.splice(bi, 667, 729, 792, 854);
                 ImageIO.write(bi, "png", new File(i + ".png"));
             } catch (Exception e) {
                 e.printStackTrace();

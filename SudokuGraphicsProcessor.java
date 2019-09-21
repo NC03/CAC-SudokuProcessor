@@ -1,10 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package sudokusolver;
-
 /**
  *
  * @author akash
@@ -31,7 +24,12 @@ public class SudokuGraphicsProcessor {
     //203 x 56
     public static ArrayList<ArrayList<Integer>> colorsInEachGrid = new ArrayList<>();
     
-    public SudokuGraphicsProcessor(File f) throws IOException { 
+    public int[][] getBoard()
+    {
+        return boxGrid;
+    }
+
+    public SudokuGraphicsProcessor(BufferedImage img)throws Exception { 
         
         //Set up boxGridInitial Array
         for (int i = 0; i < 9; i++) {
@@ -43,14 +41,6 @@ public class SudokuGraphicsProcessor {
         //Temporarily fills multi-dem arraylist
         for (int i = 0; i < 81; i++) {
             colorsInEachGrid.add(new ArrayList());
-        }
-        
-        BufferedImage img = null;
-        
-        try{
-          img = ImageIO.read(f);
-        }catch(IOException e){
-          System.out.println(e);
         }
         
         gridColor = img.getRGB(149,35);
@@ -253,26 +243,6 @@ public class SudokuGraphicsProcessor {
             }
             
         }
-        //Prints initial grid
-//        for (int d = 0; d < boxGrid.length; d++) {
-//            //column
-//            for (int e = 0; e < boxGrid[d].length;e++) {
-//                
-//                System.out.print(boxGrid[d][e] + " ");
-//            }
-//            System.out.println();
-//        }
-        
-        //Deletes all previous grid images in this folder (temporary)
-        File file = new File("/Users/akash/Desktop/GridImgs/");      
-        String[] myFiles;    
-        if (file.isDirectory()) {
-            myFiles = file.list();
-            for (int i = 0; i < myFiles.length; i++) {
-                File myFile = new File(file, myFiles[i]); 
-                myFile.delete();
-            }
-        }
         
         //Used to loop through all the number squares and recognize them
         for (int yOverall = 0; yOverall < 9; yOverall++) {
@@ -288,25 +258,7 @@ public class SudokuGraphicsProcessor {
                     int sPointX = startPointsX.get(startPointsX.size() - 1 - xGrid);
                     int sPointY = startPointsY.get(startPointsY.size() - 1 - yGrid);
 
-                    BufferedImage indivGridImg = new BufferedImage(endPointsX.get(xGrid) - sPointX + 1, endPointsY.get(yGrid) - sPointY + 1, BufferedImage.TYPE_INT_ARGB);
-
-                    for (int y = sPointY; y <= endPointsY.get(yGrid); y++) {
-
-                        for (int x = sPointX; x <= endPointsX.get(xGrid); x++) {
-
-                            int p = img.getRGB(x,y);
-                            indivGridImg.setRGB(x - sPointX, y - sPointY, p);
-
-                        }
-                    }
-                    
-                    //write image: not needed (just for testing purposes)
-                    try{
-                      File fGrid = new File("/Users/akash/Desktop/GridImgs/gridImg" + xGrid + "-" + yGrid + ".png");
-                      ImageIO.write(indivGridImg, "png", fGrid);
-                    }catch(IOException e){
-                      System.out.println(e);
-                    }
+                    BufferedImage indivGridImg = ImageUtil.splice(img,sPointX+1,endPointsX.get(xGrid),sPointY+1,endPointsY.get(yGrid));
                     
                 }
             
