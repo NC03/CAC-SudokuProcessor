@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-import javax.image.*;
+import java.awt.image.*;
 
 public class GUI
 {
