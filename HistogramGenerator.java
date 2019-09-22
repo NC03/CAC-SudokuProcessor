@@ -196,9 +196,6 @@ public class HistogramGenerator {
                 minErr = errors[i];
             }
         }
-
-        outputHistogram(new File("boardOutTxt.txt"), rowHistDouble, colHistDouble);
-
         return minIdx + 1;
     }
 
