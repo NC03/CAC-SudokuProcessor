@@ -135,25 +135,27 @@ public class SudokuGraphicsProcessor {
         }
         for (int y = startY; y < endY; y++) {
             for (int x = startX; x < endX; x++) {
-                int p = img.getRGB(x, y);
-                int xLoc = 0;
-                int yLoc = 0;
+                int p = img.getRGB(x,y);
+                int xLoc = -1;
+                int yLoc = -1;
                 int gridNum = 0;
                 boolean xIsFound = false;
                 boolean yIsFound = false;
                 for (int i = 0; i < 9; i++) {
-                    if (x <= endPointsX.get(i) && !xIsFound && x >= startPointsX.get(8 - i)) {
+                    if (x <= endPointsX.get(i) && !xIsFound && x >= startPointsX.get(8-i)) {
                         xLoc = i;
                         xIsFound = true;
                     }
-                    if (y <= endPointsY.get(i) && !yIsFound && y >= startPointsY.get(8 - i)) {
+                    if (y <= endPointsY.get(i) && !yIsFound && y >= startPointsY.get(8-i)) {
                         yLoc = i;
                         yIsFound = true;
                     }
                 }
-                gridNum = (yLoc * 9) + xLoc;
-                if (!colorsInEachGrid.get(gridNum).contains(p)) {
-                    colorsInEachGrid.get(gridNum).add(p);
+                if (xLoc != -1 && yLoc != -1) {
+                    gridNum = (yLoc * 9) + xLoc;
+                    if (!colorsInEachGrid.get(gridNum).contains(p)) {
+                        colorsInEachGrid.get(gridNum).add(p);
+                    }
                 }
             }
         }
