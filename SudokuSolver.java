@@ -1,5 +1,5 @@
 public class SudokuSolver {
-    public int[][] boxGrid = new int[9][9];
+    private int[][] boxGrid = new int[9][9];
 
     public int[][] getBoard() {
         return boxGrid;
