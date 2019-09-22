@@ -9,8 +9,16 @@ public class GUI {
             String fileName = "board.png";
             File f = new File(fileName);
             BufferedImage bi = ImageIO.read(f);
-            SudokuGraphicsProcessor = new SudokuGraphicsProcessor(bi);
+            SudokuGraphicsProcessor sgp = new SudokuGraphicsProcessor(bi);
             int[][] board = sgp.getBoard();
+            for(int[] row : board)
+            {
+                for(int e: row)
+                {
+                    System.out.print(e);
+                }
+                System.out.println();
+            }
             SudokuSolver ss = new SudokuSolver(board);
             int[][] solvedBoard = ss.getBoard();
             for(int[] row : solvedBoard)
