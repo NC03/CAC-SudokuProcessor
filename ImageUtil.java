@@ -16,10 +16,10 @@ public class ImageUtil
      */
     public static BufferedImage splice(BufferedImage bi, int x1, int y1, int x2, int y2)
     {
-        BufferedImage out = new BufferedImage(x2-x1,y2-y1,BufferedImage.TYPE_INT_RGB);
-        for(int j = y1; j < y2; j++)
+        BufferedImage out = new BufferedImage(x2-x1+1,y2-y1+1,BufferedImage.TYPE_INT_RGB);
+        for(int j = y1; j <= y2; j++)
         {
-            for(int i = x1; i < x2; i++)
+            for(int i = x1; i <= x2; i++)
             {
                 out.setRGB(i-x1,j-y1,bi.getRGB(i,j));
             }
