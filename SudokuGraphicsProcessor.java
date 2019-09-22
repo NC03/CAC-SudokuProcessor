@@ -182,12 +182,7 @@ public class SudokuGraphicsProcessor {
                             indivGridImg.setRGB(x - sPointX, y - sPointY, p);
                         }
                     }
-                    try{
-                        ImageIO.write(indivGridImg,"png",new File(""+Math.random()+".png"));
-                    }catch(Exception e)
-                    {
-                        e.printStackTrace();
-                    }
+                    
                 }
             }
         }

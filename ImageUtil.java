@@ -101,6 +101,6 @@ public class ImageUtil
                 threshold += (double)val / numPixels;
             }
         }
-        return thresholdFilter(bi,(int)threshold);
+        return thresholdFilter(bi,(int)(0.5 * threshold));
     }
 }
