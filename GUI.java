@@ -4,10 +4,20 @@ import java.awt.image.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
+import java.awt.*;
 
-public class GUI {
+public class GUI extends JFrame {
+    private String state = "mainScreen";
     public static void main(String[] args) {
-        GUI();
+        GUI g = new GUI();
+        while (true) {
+            try {
+                Thread.sleep(1000);
+                g.repaint();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         // try {
         // String fileName = "board.png";
@@ -38,33 +48,20 @@ public class GUI {
         // }
     }
 
-    public static void GUI() {
-        JFrame frame = new JFrame("Sudoku Solver");
-        JPanel panel = new JPanel();
+    public GUI() {
+        super("Sudoku Solver");
+        
 
-        JButton chooseFileBtn = new JButton("Choose a File");
-        chooseFileBtn.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    JFileChooser fc = new JFileChooser();
-                    if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-                        File f = fc.getSelectedFile();
-                        BufferedImage bi = ImageIO.read(f);
-                        SudokuGraphicsProcessor sgp = new SudokuGraphicsProcessor(bi);
-                        int[][] board = sgp.getBoard();
-                        SudokuSolver ss = new SudokuSolver(board);
-                        System.out.println(ss);
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        });
-        panel.add(chooseFileBtn);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setSize(200, 200);
+    }
 
-        frame.add(panel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setSize(200, 200);
+    public void paint(Graphics g) {
+        if(state.equals("mainScreen"))
+        {
+            g.setColor(new Color(0,0,0));
+            g.fillRect(100, 100, 100, 100);
+        }
     }
 }
