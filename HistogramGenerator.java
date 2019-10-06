@@ -4,13 +4,85 @@ import java.io.*;
 import java.awt.Color;
 
 public class HistogramGenerator {
-    
+    public static double[][][] model;
+
     public static void main(String[] args)
     {
-
+        generateModel();
     }
-
-
+    public static void generateModel()
+    {
+        for(int i = 0; i < 9; i++)
+        {
+            try{
+                
+            }catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
+        }
+    }
+    public static int processImage(BufferedImage bi)
+    {
+        Color c = new Color(0,0,0);
+        double[] rowHist = process(rowHistogram(bi, c));
+        double[] colHist = process(colHistogram(bi, c));
+        double[] errors = new double[9];
+        for(int i = 0; i < 9; i++)
+        {
+            errors[i] = error(model[i][0],rowHist) + error(model[i][1],colHist);
+        }
+        return minIdx(errors)+1;
+    }
+    public static int minIdx(double vals)
+    {
+        int idx = 0;
+        double val = vals[i];
+        for(int i = 0; i < vals.length; i++)
+        {
+            if(vals[i] < val)
+            {
+                val = vals[i];
+                idx = i;
+            }
+        }
+        return idx;
+    }
+    public static double error(double[] a, double[]b)
+    {
+        double out = 0;
+        for(int i = 0; i < a.length; i++)
+        {
+            out += Math.pow(a[i]-b[i],2);
+        }
+        return out;
+    }
+    public static int[] rowHistogram(BufferedImage bi, Color c) {
+        int[] out = new int[bi.getHeight()];
+        for (int j = 0; j < bi.getHeight(); j++) {
+            int count = 0;
+            for (int i = 0; i < bi.getWidth(); i++) {
+                if (bi.getRGB(i, j) == c.getRGB()) {
+                    count++;
+                }
+            }
+            out[j] = count;
+        }
+        return out;
+    }
+    public static int[] colHistogram(BufferedImage bi, Color c) {
+        int[] out = new int[bi.getWidth()];
+        for (int i = 0; i < bi.getWidth(); i++) {
+            int count = 0;
+            for (int j = 0; j < bi.getHeight(); j++) {
+                if (bi.getRGB(i, j) == c.getRGB()) {
+                    count++;
+                }
+            }
+            out[i] = count;
+        }
+        return out;
+    }
     public static double[] process(int[] hist)
     {
         hist = removeZero(hist);
