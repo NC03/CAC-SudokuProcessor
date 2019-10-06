@@ -15,11 +15,31 @@ public class HistogramGenerator {
         for(int i = 0; i < 9; i++)
         {
             try{
-                
+                BufferedImage bi = ImageIO.read(new File("imageNYOut/"+i+".png"));
+                Color c = new Color(0,0,0);
+                double[] rowHist = process(rowHistogram(bi,c));
+                double[] colHist = process(colHistogram(bi,c));
+                model[i][0] = rowHist;
+                model[i][1] = colHist;
             }catch(Exception ex)
             {
                 ex.printStackTrace();
             }
+        }
+        BufferedWriter bw = new BufferedWriter(new FileWriter(new File("model.txt")));
+        for(int i = 0; i < model.length; i++)
+        {
+            bw.write("{");
+            for(int j = 0; j < model[i].length; j++)
+            {
+                bw.write("{");
+                for(int k = 0; k < model[i][k].length; k++)
+                {
+                    bw.write(model[i][j][k]+(k < model[i][j].length-1 ? ",":"\n"));
+                }
+                bw.write("}"+(j < model[i].length-1 ? ",":"\n"));
+            }
+            bw.write("}"+(i < model.length-1 ? ",":"\n"));
         }
     }
     public static int processImage(BufferedImage bi)
