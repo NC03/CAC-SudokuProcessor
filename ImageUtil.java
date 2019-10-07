@@ -129,4 +129,74 @@ public class ImageUtil {
         blue *= 255;
         return new Color((int) red, (int) green, (int) blue);
     }
+    
+    public static BufferedImage convToBlackWhite(BufferedImage bi)
+    {
+        BufferedImage out = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_RGB);
+        ArrayList<Integer> colorsInRow = new ArrayList<>();
+        ArrayList<Integer> colorFreq = new ArrayList<>();
+        for (int x = 0; x < bi.getWidth(); x++) {
+            
+            int p = bi.getRGB(x,0);
+            if (!colorsInRow.contains(p)) {
+                colorsInRow.add(p);
+                colorFreq.add(1);
+                
+            } else {
+                
+                for (int i = 0; i < colorsInRow.size(); i++) {
+                    
+                    if (colorsInRow.get(i) == p) {
+                        
+                        colorFreq.set(i, colorFreq.get(i) + 1);
+                        
+                    }
+                }
+            }
+        }
+        
+        System.out.println(colorsInRow);
+        System.out.println(colorFreq);
+        
+        for (int i = 0; i < colorFreq.size(); i++) {
+            
+            if (colorFreq.get(i) >= 25) {
+                
+                colorFreq.remove(i);
+                colorsInRow.remove(i);
+                i--;
+            }
+            
+        }
+        System.out.println("----");
+        System.out.println(colorsInRow);
+        System.out.println(colorFreq);
+        for (int y = 0; y < bi.getHeight(); y++) {
+            
+            for (int x = 0; x < bi.getWidth(); x++) {
+            
+                int p = bi.getRGB(x,y);
+                
+                for (int i = 0; i < colorsInRow.size(); i++) {
+                    
+                    if (p == colorsInRow.get(i) || p == SudokuGraphicsProcessor.blackColor) {
+                    
+                        out.setRGB(x, y, SudokuGraphicsProcessor.blackColor);
+                        break;
+                        
+                    } else {
+                        out.setRGB(x, y, SudokuGraphicsProcessor.whiteColor);
+
+                    }
+                    
+                }
+                
+            }
+            
+        }
+        
+        
+        return out;
+    }
+    
 }
