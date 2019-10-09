@@ -174,7 +174,7 @@ public class SudokuGraphicsProcessor {
                 if (!blankGrids.contains(gridNum)) {
                     int sPointX = startPointsX.get(startPointsX.size() - 1 - xGrid);
                     int sPointY = startPointsY.get(startPointsY.size() - 1 - yGrid);
-                    BufferedImage indivGridImg = iU.splice(img, sPointX, sPointY, endPointsX.get(xGrid), endPointsY.get(yGrid));
+                    BufferedImage indivGridImg = ImageUtil.splice(img, sPointX, sPointY, endPointsX.get(xGrid), endPointsY.get(yGrid));
                 }
             }
         }
