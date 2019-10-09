@@ -11,25 +11,27 @@ public class SudokuEntering extends JFrame {
     private int[][] board;
     private int[][][] coordinates;
     private int selectedIdx = -1;
-    
+
     public SudokuEntering(int[][] board)
     {
         super("Sudoku Solver");
         this.board = board;
+        System.out.println("SudokuEntering");
         setup();
     }
 
     public SudokuEntering() {
         super("Sudoku Solver");
+        board = new int[9][9];
+        System.out.println("SudokuEntering");
         setup();
     }
-    
+
     public void setup()
     {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         setSize(600, 400);
-        board = new int[9][9];
         addMouseMotionListener(new MouseMotionListener(){
                 public void mouseMoved(MouseEvent e)
                 {
@@ -109,8 +111,8 @@ public class SudokuEntering extends JFrame {
                 {
                     if(selectedIdx != -1)
                     {
-                        int i = selectedIdx % 9;
-                        int j = selectedIdx / 9;
+                        int i = selectedIdx / 9;
+                        int j = selectedIdx % 9;
                         board[i][j] = Integer.parseInt(""+e.getKeyChar());
                     }
                     repaint();
@@ -147,10 +149,10 @@ public class SudokuEntering extends JFrame {
         int dim = Math.min(width,height)/2/9;
         coordinates = new int[81][2][2];
         for (int n = 0; n < 81; n++) {
-            int i = n % 9;
-            int j = n / 9;
-            int x = width / 2 - 4*dim - dim/2 + i * dim;
-            int y = height / 2 - 4*dim - dim/2 + j * dim;
+            int i = n / 9;
+            int j = n % 9;
+            int x = width / 2 - 4*dim - dim/2 + j * dim;
+            int y = height / 2 - 4*dim - dim/2 + i * dim;
             g.setColor(new Color(0,0,0));
             g.drawRect(x,y,dim,dim);
             if(board[i][j] != 0){

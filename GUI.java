@@ -16,34 +16,6 @@ public class GUI extends JFrame {
 
     public static void main(String[] args) {
         GUI g = new GUI();
-
-        // try {
-        // String fileName = "board.png";
-        // File f = new File(fileName);
-        // BufferedImage bi = ImageIO.read(f);
-        // SudokuGraphicsProcessor sgp = new SudokuGraphicsProcessor(bi);
-        // int[][] board = sgp.getBoard();
-        // for(int[] row : board)
-        // {
-        // for(int e: row)
-        // {
-        // System.out.print(e);
-        // }
-        // System.out.println();
-        // }
-        // SudokuSolver ss = new SudokuSolver(board);
-        // int[][] solvedBoard = ss.getBoard();
-        // for(int[] row : solvedBoard)
-        // {
-        // for(int e: row)
-        // {
-        // System.out.print(e);
-        // }
-        // System.out.println();
-        // }
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // }
     }
 
     public GUI() {
@@ -93,6 +65,20 @@ public class GUI extends JFrame {
                         {
                             case 0:
                             System.out.println("Import from Picture");
+                            JFileChooser fc = new JFileChooser();
+                            fc.setDialogTitle("Load the Image");
+                            fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                            if(fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+                            {
+                                try{
+                                    File imgIn = fc.getSelectedFile();
+                                    BufferedImage bi = ImageIO.read(imgIn);
+                                    ImageCropper ic = new ImageCropper(bi);
+                                }catch(Exception ex)
+                                {
+                                    JOptionPane.showMessageDialog(null, ex.getMessage(), "Error:", JOptionPane.ERROR_MESSAGE);
+                                }
+                            }
                             break;
                             case 1:
                             System.out.println("Enter Raw Data");
