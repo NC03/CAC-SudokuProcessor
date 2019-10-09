@@ -67,10 +67,6 @@ public class ImageCropper extends JFrame
         addMouseMotionListener(new MouseMotionListener(){
                 public void mouseMoved(MouseEvent e)
                 {
-                    if(coordinates != null)
-                    {
-                        System.out.println(coordinates[1][0]+","+coordinates[1][1]);
-                    }
                 }
 
                 public void mouseDragged(MouseEvent e)
@@ -105,9 +101,7 @@ public class ImageCropper extends JFrame
                             BufferedImage bi = getCroppedImage();
 
                             try{
-                                ImageIO.write(bi,"png",new File("test.png"));
                                 int[][] board = SudokuGraphicsProcessor.parseImage(getCroppedImage());
-                                System.out.println(board);
                                 SudokuEntering se = new SudokuEntering(board);
                             }catch(Exception ex)
                             {
@@ -152,8 +146,6 @@ public class ImageCropper extends JFrame
         int x2 = (int)(inputImage.getWidth()*((double)Math.max(coordinates[0][0],coordinates[1][0])-bounds[0][0])/viewportWidth);
         int y1 = (int)(inputImage.getHeight()*((double)Math.min(coordinates[0][1],coordinates[1][1])-bounds[0][1])/viewportHeight);
         int y2 = (int)(inputImage.getHeight()*((double)Math.max(coordinates[0][1],coordinates[1][1])-bounds[0][1])/viewportHeight);
-        System.out.println(x1+","+y1);
-        System.out.println(x2+","+y2);
         return crop(inputImage,x1,x2,y1,y2);
     }
 
