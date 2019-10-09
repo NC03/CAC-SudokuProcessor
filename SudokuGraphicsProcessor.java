@@ -14,6 +14,10 @@ public class SudokuGraphicsProcessor {
     
     public static final int blackColor = -16777216; //black
     public static final int whiteColor = -1; //white
+    public static ArrayList<Integer> startPointsX = new ArrayList<>();
+    public static ArrayList<Integer> startPointsY = new ArrayList<>();
+    public static ArrayList<Integer> endPointsX = new ArrayList<>();
+    public static ArrayList<Integer> endPointsY = new ArrayList<>();
     
     public static int[][] parseImage(File f) throws IOException { 
         
@@ -141,14 +145,6 @@ public class SudokuGraphicsProcessor {
           }catch(IOException e){
             System.out.println(e);
           }
-        
-        
-        //Use imgBW for the rest of the code downwards
-        //For storing x & y coordinates of each grid
-        ArrayList<Integer> startPointsX = new ArrayList<>();
-        ArrayList<Integer> startPointsY = new ArrayList<>();
-        ArrayList<Integer> endPointsX = new ArrayList<>();
-        ArrayList<Integer> endPointsY = new ArrayList<>();
         
         //Finds x end coordinates of each grid
         for (int x = 0; x < imgBW.getWidth(); x++) {
