@@ -11,9 +11,21 @@ public class SudokuEntering extends JFrame {
     private int[][] board;
     private int[][][] coordinates;
     private int selectedIdx = -1;
+    
+    public SudokuEntering(int[][] board)
+    {
+        super("Sudoku Solver");
+        this.board = board;
+        setup();
+    }
 
     public SudokuEntering() {
         super("Sudoku Solver");
+        setup();
+    }
+    
+    public void setup()
+    {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         setSize(600, 400);
