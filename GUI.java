@@ -23,6 +23,14 @@ public class GUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setSize(600, 400);
+	try{
+		BufferedImage icon = ImageIO.read(new File("icon.png"));
+		setIconImage(icon);
+
+	}catch(Exception ex)
+	{
+		ex.printStackTrace();
+	}
         addMouseMotionListener(new MouseMotionListener(){
                 public void mouseMoved(MouseEvent e)
                 {
