@@ -17,19 +17,6 @@ import javax.imageio.ImageIO;
  */
 public class CreateFinalBoard {
 
-    public static BufferedImage createBoard(int[][] boxGrid)
-    {
-        BufferedImage bi = new BufferedImage(600,600,BufferedImage.TYPE_INT_RGB);
-        for(int i = 0; i < 600; i++)
-        {
-            for(int j = 0; j < 600; j++)
-            {
-                bi.setRGB(i,j,0xffffff);
-            }
-        }
-        return bi;
-    }
-    
     public static BufferedImage createBoard(int[][] boxGrid, ArrayList<Integer> blankGrids) throws IOException {
         
         int[][] numsDistX = {{23,24,25,26,27,22,23,24,25,26,27,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,50},
@@ -63,7 +50,7 @@ public class CreateFinalBoard {
         int[] endPoints = {50, 102, 154, 210, 262, 314, 370, 422, 474};
         
         BufferedImage img = null;
-        File f = new File("/Users/akash/Desktop/SBTemplate.png");  
+        File f = new File("SBTemplate.png");  
         try{
            img = ImageIO.read(f);
          }catch(IOException e){

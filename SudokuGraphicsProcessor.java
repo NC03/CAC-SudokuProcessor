@@ -122,18 +122,7 @@ public class SudokuGraphicsProcessor {
         BufferedImage imgSpliced = ImageUtil.splice(img, startX, startY, endX, endY);
         BufferedImage imgBW = ImageUtil.convToBlackWhite(imgSpliced);
         //For testing purposes
-        try{
-            File fGrid = new File("/Users/akash/Desktop/imgBW.png");
-            ImageIO.write(imgBW, "png", fGrid);
-          }catch(IOException e){
-            System.out.println(e);
-          }
-        try{
-            File fGrid = new File("/Users/akash/Desktop/imgSpliced.png");
-            ImageIO.write(imgSpliced, "png", fGrid);
-          }catch(IOException e){
-            System.out.println(e);
-          }
+        
         
         ArrayList<Integer> startPointsX = new ArrayList<Integer>();
         ArrayList<Integer> startPointsY = new ArrayList<Integer>();
@@ -295,13 +284,7 @@ public class SudokuGraphicsProcessor {
                     int x = HistogramGenerator.processImage(indivGridImg);
                     boxGrid[yGrid][xGrid] = x;
                     //write image: not needed (just for testing purposes)
-                    try{
-                      File fGrid = new File("/Users/akash/Desktop/GridImgs/gridImg" + xGrid + "-" + yGrid + ".png");
-                      ImageIO.write(indivGridImg, "png", fGrid);
-                      
-                    }catch(IOException e){
-                      System.out.println(e);
-                    }
+                    
                     
                 }
             
