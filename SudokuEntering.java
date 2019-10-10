@@ -11,6 +11,8 @@ public class SudokuEntering extends JFrame {
     private int[][] board;
     private int[][][] coordinates;
     private int selectedIdx = -1;
+    private String[] buttonText = { "Solve", "Cancel" };
+    private int[][][] buttonCoordinates;
 
     public SudokuEntering(int[][] board)
     {
@@ -61,6 +63,21 @@ public class SudokuEntering extends JFrame {
                         selectedIdx = idx;
                     }else{
                         selectedIdx = -1;
+                    }
+                    int btnIdx = getButtonIdx(e.getX(),e.getY());
+                    if(btnIdx != -1)
+                    {
+                        switch(buttonText[btnIdx])
+                        {
+                            case "Solve":
+                            int[][] solvedBoard = SudokuSolver.solveSudoku(board);
+                            ImageDisplayer id = new ImageDisplayer(solvedBoard, CreateFinalBoard.createBoard(solvedBoard));
+                            dispose();
+                            break;
+                            case "Close":
+                            dispose();
+                            break;
+                        }
                     }
                     repaint();
                 }
@@ -167,6 +184,38 @@ public class SudokuEntering extends JFrame {
                 g.setColor(new Color(255,180,0));
                 g.drawOval(x, y, dim, dim);
             }
+        }
+        drawButtons(g);
+    }
+
+    public int getButtonIdx(int x, int y) {
+        for (int i = 0; i < buttonText.length; i++) {
+            int xMin = Math.min(buttonCoordinates[i][0][0], buttonCoordinates[i][1][0]);
+            int xMax = Math.max(buttonCoordinates[i][0][0], buttonCoordinates[i][1][0]);
+            int yMin = Math.min(buttonCoordinates[i][0][1], buttonCoordinates[i][1][1]);
+            int yMax = Math.max(buttonCoordinates[i][0][1], buttonCoordinates[i][1][1]);
+            if (x >= xMin && x <= xMax && y >= yMin && y <= yMax) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void drawButtons(Graphics g) {
+        int y = getHeight() * 95 / 100;
+        int btnHeight = getHeight() * 4 / 100;
+        int btnWidth = getWidth() / 4;
+        buttonCoordinates = new int[buttonText.length][2][2];
+        for (int i = 0; i < buttonText.length; i++) {
+            int x = getWidth() * (i + 1) / (buttonText.length + 1);
+            g.setColor(new Color(255, 255, 255));
+            g.fillRect(x - btnWidth / 2, y - btnHeight / 2, btnWidth, btnHeight);
+            g.setColor(new Color(0, 0, 0));
+            g.drawString(buttonText[i], x, y);
+            buttonCoordinates[i][0][0] = x - btnWidth / 2;
+            buttonCoordinates[i][0][1] = y - btnHeight / 2;
+            buttonCoordinates[i][1][0] = buttonCoordinates[i][0][0] + btnWidth;
+            buttonCoordinates[i][1][1] = buttonCoordinates[i][0][1] + btnHeight;
         }
     }
 }

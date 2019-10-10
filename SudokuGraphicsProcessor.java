@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sudokusolver;
 
 /**
  *
@@ -19,9 +18,9 @@ public class SudokuGraphicsProcessor {
     
     public static final int blackColor = -16777216; //black
     public static final int whiteColor = -1; //white
-    public static ArrayList<Integer> blankGrids = new ArrayList<>();
+    public static ArrayList<Integer> blankGrids = new ArrayList<Integer>();
     
-    public static int[][] parseImage(File f) throws IOException { 
+    public static int[][] parseImage(BufferedImage imgInit) throws IOException { 
         
         int[][] boxGrid = new int[9][9];
 
@@ -30,7 +29,7 @@ public class SudokuGraphicsProcessor {
         int endX = 0;
         int endY = 0;
 
-        ArrayList<ArrayList<Integer>> colorsInEachGrid = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> colorsInEachGrid = new ArrayList<ArrayList<Integer>>();
     
         //Set up boxGridInitial Array
         for (int i = 0; i < 9; i++) {
@@ -41,19 +40,10 @@ public class SudokuGraphicsProcessor {
         
         //Temporarily fills multi-dem arraylist
         for (int i = 0; i < 81; i++) {
-            colorsInEachGrid.add(new ArrayList());
+            colorsInEachGrid.add(new ArrayList<Integer>());
         }
-        
-        
-        BufferedImage imgInit = null;
-        
-        try{
-          imgInit = ImageIO.read(f);
-        }catch(IOException e){
-          System.out.println(e);
-        }
-        ImageUtil iU = new ImageUtil();
-        BufferedImage img = iU.grayscale(imgInit);
+
+        BufferedImage img = ImageUtil.grayscale(imgInit);
         int overallWidth = img.getWidth();
         int overallHeight = img.getHeight();
         
@@ -129,8 +119,8 @@ public class SudokuGraphicsProcessor {
         }
         
         //USE THIS AS THE NEW THRESHOLD THING -- The rest wont work until it converts all the grid borders to black
-        BufferedImage imgSpliced = iU.splice(img, startX, startY, endX, endY);
-        BufferedImage imgBW = iU.convToBlackWhite(imgSpliced);
+        BufferedImage imgSpliced = ImageUtil.splice(img, startX, startY, endX, endY);
+        BufferedImage imgBW = ImageUtil.convToBlackWhite(imgSpliced);
         //For testing purposes
         try{
             File fGrid = new File("/Users/akash/Desktop/imgBW.png");
@@ -145,10 +135,10 @@ public class SudokuGraphicsProcessor {
             System.out.println(e);
           }
         
-        ArrayList<Integer> startPointsX = new ArrayList<>();
-        ArrayList<Integer> startPointsY = new ArrayList<>();
-        ArrayList<Integer> endPointsX = new ArrayList<>();
-        ArrayList<Integer> endPointsY = new ArrayList<>();
+        ArrayList<Integer> startPointsX = new ArrayList<Integer>();
+        ArrayList<Integer> startPointsY = new ArrayList<Integer>();
+        ArrayList<Integer> endPointsX = new ArrayList<Integer>();
+        ArrayList<Integer> endPointsY = new ArrayList<Integer>();
         
         //Finds x end coordinates of each grid
         for (int x = 0; x < imgBW.getWidth(); x++) {
@@ -301,7 +291,7 @@ public class SudokuGraphicsProcessor {
                     int sPointX = startPointsX.get(startPointsX.size() - 1 - xGrid);
                     int sPointY = startPointsY.get(startPointsY.size() - 1 - yGrid);
                     
-                    BufferedImage indivGridImg = iU.splice(imgSpliced, sPointX, sPointY, endPointsX.get(xGrid), endPointsY.get(yGrid));
+                    BufferedImage indivGridImg = ImageUtil.splice(imgSpliced, sPointX, sPointY, endPointsX.get(xGrid), endPointsY.get(yGrid));
                     int x = HistogramGenerator.processImage(indivGridImg);
                     boxGrid[yGrid][xGrid] = x;
                     //write image: not needed (just for testing purposes)
