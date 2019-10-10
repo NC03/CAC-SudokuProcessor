@@ -99,12 +99,7 @@ public class SudokuSolver {
     
     public static boolean doesWork(int row, int col, int num){
         
-        if (checkRow(col, num) && checkColumn(row, num) && checkBox(row, col, num)) {
-            
-            return true;
-            
-        }
-        return false;
+        return checkRow(col, num) && checkColumn(row, num) && checkBox(row, col, num);
     }
     
     public static boolean solveSudoku(){
@@ -155,13 +150,7 @@ public class SudokuSolver {
             }
         }
         
-        if (isDone == true) {
-            
-            return true;
-            
-        }
-        
-        return false;
+        return isDone;
     }
 
 }
