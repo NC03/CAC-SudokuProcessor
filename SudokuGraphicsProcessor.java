@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package sudokusolver;
 
 /**
@@ -14,15 +19,11 @@ public class SudokuGraphicsProcessor {
     
     public static final int blackColor = -16777216; //black
     public static final int whiteColor = -1; //white
-    public static ArrayList<Integer> startPointsX = new ArrayList<>();
-    public static ArrayList<Integer> startPointsY = new ArrayList<>();
-    public static ArrayList<Integer> endPointsX = new ArrayList<>();
-    public static ArrayList<Integer> endPointsY = new ArrayList<>();
+    public static ArrayList<Integer> blankGrids = new ArrayList<>();
     
     public static int[][] parseImage(File f) throws IOException { 
         
         int[][] boxGrid = new int[9][9];
-        ArrayList<Integer> blankGrids = new ArrayList<>();
 
         int startX = 0;
         int startY = 0;
@@ -31,7 +32,6 @@ public class SudokuGraphicsProcessor {
 
         ArrayList<ArrayList<Integer>> colorsInEachGrid = new ArrayList<>();
     
-        
         //Set up boxGridInitial Array
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -129,7 +129,6 @@ public class SudokuGraphicsProcessor {
         }
         
         //USE THIS AS THE NEW THRESHOLD THING -- The rest wont work until it converts all the grid borders to black
-        
         BufferedImage imgSpliced = iU.splice(img, startX, startY, endX, endY);
         BufferedImage imgBW = iU.convToBlackWhite(imgSpliced);
         //For testing purposes
@@ -145,6 +144,11 @@ public class SudokuGraphicsProcessor {
           }catch(IOException e){
             System.out.println(e);
           }
+        
+        ArrayList<Integer> startPointsX = new ArrayList<>();
+        ArrayList<Integer> startPointsY = new ArrayList<>();
+        ArrayList<Integer> endPointsX = new ArrayList<>();
+        ArrayList<Integer> endPointsY = new ArrayList<>();
         
         //Finds x end coordinates of each grid
         for (int x = 0; x < imgBW.getWidth(); x++) {
@@ -218,6 +222,7 @@ public class SudokuGraphicsProcessor {
             }
         }
         
+        //Determines which grid x and y are in
         for (int y = 0; y < imgBW.getHeight(); y++) {
             
             for (int x = 0; x < imgBW.getWidth(); x++) {
@@ -296,7 +301,7 @@ public class SudokuGraphicsProcessor {
                     int sPointX = startPointsX.get(startPointsX.size() - 1 - xGrid);
                     int sPointY = startPointsY.get(startPointsY.size() - 1 - yGrid);
                     
-                    BufferedImage indivGridImg = iU.splice(imgBW, sPointX, sPointY, endPointsX.get(xGrid), endPointsY.get(yGrid));
+                    BufferedImage indivGridImg = iU.splice(imgSpliced, sPointX, sPointY, endPointsX.get(xGrid), endPointsY.get(yGrid));
                     int x = HistogramGenerator.processImage(indivGridImg);
                     boxGrid[yGrid][xGrid] = x;
                     //write image: not needed (just for testing purposes)
@@ -313,7 +318,7 @@ public class SudokuGraphicsProcessor {
             }
             
         }
-        return boxGrid;
         
+        return boxGrid;
     }
 }
