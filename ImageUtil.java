@@ -132,12 +132,16 @@ public class ImageUtil {
     
     public static BufferedImage convToBlackWhite(BufferedImage bi)
     {
-        BufferedImage out = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage out = new BufferedImage(bi.getWidth(), bi.getWidth(), BufferedImage.TYPE_INT_RGB); //Makes a square: W=H
         ArrayList<Integer> colorsInRow = new ArrayList<>();
         ArrayList<Integer> colorFreq = new ArrayList<>();
-        for (int x = 0; x < bi.getWidth(); x++) {
+        ArrayList<Integer> xCordInRow = new ArrayList<>();
+        ArrayList<Integer> yCordInRow = new ArrayList<>();
+        
+        //Fills up arraylist colorsInRow and colorFreq
+        for (int a = 0; a < bi.getWidth(); a++) {
             
-            int p = bi.getRGB(x,0);
+            int p = new Color(bi.getRGB(a,0)).getRed();
             if (!colorsInRow.contains(p)) {
                 colorsInRow.add(p);
                 colorFreq.add(1);
@@ -149,18 +153,37 @@ public class ImageUtil {
                     if (colorsInRow.get(i) == p) {
                         
                         colorFreq.set(i, colorFreq.get(i) + 1);
-                        
+                        break;
                     }
                 }
             }
+            
+            int p2 = new Color(bi.getRGB(0,a)).getRed();
+            if (!colorsInRow.contains(p2)) {
+                colorsInRow.add(p2);
+                colorFreq.add(1);
+                
+            } else {
+                
+                for (int i = 0; i < colorsInRow.size(); i++) {
+                    
+                    if (colorsInRow.get(i) == p2) {
+                        
+                        colorFreq.set(i, colorFreq.get(i) + 1);
+                        break;
+                    }
+                }
+            }
+            
         }
         
         System.out.println(colorsInRow);
         System.out.println(colorFreq);
         
+        //Removes unnecessary colors from colorsInRow
         for (int i = 0; i < colorFreq.size(); i++) {
             
-            if (colorFreq.get(i) >= 25) {
+            if (colorFreq.get(i) >= 50) {
                 
                 colorFreq.remove(i);
                 colorsInRow.remove(i);
@@ -168,33 +191,63 @@ public class ImageUtil {
             }
             
         }
-        System.out.println("----");
-        System.out.println(colorsInRow);
-        System.out.println(colorFreq);
-        for (int y = 0; y < bi.getHeight(); y++) {
-            
-            for (int x = 0; x < bi.getWidth(); x++) {
-            
-                int p = bi.getRGB(x,y);
-                
-                for (int i = 0; i < colorsInRow.size(); i++) {
+        
+        //Sees which x and y coordinates occur < 50 times
+        for (int a = 0; a < bi.getWidth(); a++) {
+            int p = new Color(bi.getRGB(a,0)).getRed();
+            int p2 = new Color(bi.getRGB(0,a)).getRed();
+            boolean hasAddedX = false;
+            boolean hasAddedY = false;
+            for (int i = 0; i < colorsInRow.size(); i++) {
                     
-                    if (p == colorsInRow.get(i) || p == SudokuGraphicsProcessor.blackColor) {
-                    
-                        out.setRGB(x, y, SudokuGraphicsProcessor.blackColor);
-                        break;
-                        
-                    } else {
-                        out.setRGB(x, y, SudokuGraphicsProcessor.whiteColor);
-
-                    }
-                    
+                if (colorsInRow.get(i) == p && !hasAddedX) {
+                    xCordInRow.add(a);
+                    hasAddedX = true;
+                }
+                if (colorsInRow.get(i) == p2 && !hasAddedY) {
+                    yCordInRow.add(a);
+                    hasAddedY = true;
+                }
+                if (hasAddedX && hasAddedY) {
+                    break;
                 }
                 
             }
             
         }
         
+        System.out.println("--XY-Cordinates--");
+        System.out.println(xCordInRow.size());
+        System.out.println(yCordInRow.size());
+        System.out.println("----------");
+        for (int y = 0; y < bi.getWidth(); y++) {
+            
+            for (int x = 0; x < bi.getWidth(); x++) {
+            
+                int p = new Color(bi.getRGB(x,y)).getRed();
+                
+                int largerCordInRowSize = xCordInRow.size();
+                if (yCordInRow.size() > largerCordInRowSize) {
+                    largerCordInRowSize = yCordInRow.size();
+                }
+                
+                for (int i = 0; i < largerCordInRowSize; i++) {
+                    try{
+                        if (x == xCordInRow.get(i) || y == yCordInRow.get(i) || p < 159) {
+
+                            out.setRGB(x, y, SudokuGraphicsProcessor.blackColor);
+                            break;
+
+                        } else {
+                            out.setRGB(x, y, SudokuGraphicsProcessor.whiteColor);
+
+                        }
+                    }catch(Exception err){
+                    }
+                    
+                }
+            }
+        }
         
         return out;
     }
