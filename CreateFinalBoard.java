@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sudokusolver;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -18,7 +17,7 @@ import javax.imageio.ImageIO;
  */
 public class CreateFinalBoard {
     
-    public static void createBoard(int[][] boxGrid, ArrayList<Integer> blankGrids) throws IOException {
+    public static BufferedImage createBoard(int[][] boxGrid, ArrayList<Integer> blankGrids) {
         
         int[][] numsDistX = {{23,24,25,26,27,22,23,24,25,26,27,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,50},
                              {19,20,21,22,23,24,25,26,27,28,17,18,19,20,21,22,23,24,25,26,27,28,29,30,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,15,16,17,18,19,20,21,22,24,25,26,27,28,29,30,31,32,16,17,18,19,20,26,27,28,29,30,31,32,16,17,18,19,26,27,28,29,30,31,32,17,18,26,27,28,29,30,31,32,26,27,28,29,30,31,32,26,27,28,29,30,31,32,25,26,27,28,29,30,31,32,24,25,26,27,28,29,30,31,23,24,25,26,27,28,29,30,31,22,23,24,25,26,27,28,29,30,21,22,23,24,25,26,27,28,29,20,21,22,23,24,25,26,27,28,19,20,21,22,23,24,25,26,27,17,18,19,20,21,22,23,24,25,26,16,17,18,19,20,21,22,23,24,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,50},
@@ -70,15 +69,7 @@ public class CreateFinalBoard {
             }
             
         }
-        
-        try{
-            File fOut = new File("/Users/akash/Desktop/completeSudokuBoard.png");
-            ImageIO.write(img, "png", fOut);
-
-          }catch(IOException e){
-            System.out.println(e);
-          }
-        
+        return img;
     }
     
     public static BufferedImage createBlankTemplate() {
@@ -156,15 +147,15 @@ public class CreateFinalBoard {
     //Was used to generate the long arrays above
     public static void createArray(int[][] boxGrid, ArrayList<Integer> startPointsX, ArrayList<Integer> startPointsY, ArrayList<Integer> endPointsX, ArrayList<Integer> endPointsY) throws IOException {
 
-        ArrayList<ArrayList<Integer>> numsDistX = new ArrayList<>(); //Distance each pixel is from starting point of grid X
-        ArrayList<ArrayList<Integer>> numsDistY = new ArrayList<>(); //Distance each pixel is from starting point of grid Y
-        ArrayList<ArrayList<Integer>> colorInPixel = new ArrayList<>(); //Color in each pixel
+        ArrayList<ArrayList<Integer>> numsDistX = new ArrayList<ArrayList<Integer>>(); //Distance each pixel is from starting point of grid X
+        ArrayList<ArrayList<Integer>> numsDistY = new ArrayList<ArrayList<Integer>>(); //Distance each pixel is from starting point of grid Y
+        ArrayList<ArrayList<Integer>> colorInPixel = new ArrayList<ArrayList<Integer>>(); //Color in each pixel
 
         //Temporarily fills in the 2 multidimensional arraylists
         for (int i = 0; i < 9; i++) {
-            numsDistX.add(new ArrayList());
-            numsDistY.add(new ArrayList());
-            colorInPixel.add(new ArrayList());
+            numsDistX.add(new ArrayList<Integer>());
+            numsDistY.add(new ArrayList<Integer>());
+            colorInPixel.add(new ArrayList<Integer>());
         }
         
         for (int i = 1; i <= 9; i++) {
