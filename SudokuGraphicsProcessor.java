@@ -280,7 +280,7 @@ public class SudokuGraphicsProcessor {
                     int sPointX = startPointsX.get(startPointsX.size() - 1 - xGrid);
                     int sPointY = startPointsY.get(startPointsY.size() - 1 - yGrid);
                     
-                    BufferedImage indivGridImg = ImageUtil.splice(imgSpliced, sPointX, sPointY, endPointsX.get(xGrid), endPointsY.get(yGrid));
+                    BufferedImage indivGridImg = ImageUtil.splice(imgBW, sPointX, sPointY, endPointsX.get(xGrid), endPointsY.get(yGrid));
                     int x = HistogramGenerator.processImage(indivGridImg);
                     boxGrid[yGrid][xGrid] = x;
                     //write image: not needed (just for testing purposes)
