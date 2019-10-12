@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package sudokusolver;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -16,8 +17,8 @@ import javax.imageio.ImageIO;
  * @author akash
  */
 public class CreateFinalBoard {
-
-    public static BufferedImage createBoard(int[][] boxGrid, ArrayList<Integer> blankGrids) throws IOException {
+    
+    public static void createBoard(int[][] boxGrid, ArrayList<Integer> blankGrids) throws IOException {
         
         int[][] numsDistX = {{23,24,25,26,27,22,23,24,25,26,27,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,22,23,24,25,26,27,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,31,18,19,20,21,22,23,24,25,26,27,28,29,30,50},
                              {19,20,21,22,23,24,25,26,27,28,17,18,19,20,21,22,23,24,25,26,27,28,29,30,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,15,16,17,18,19,20,21,22,24,25,26,27,28,29,30,31,32,16,17,18,19,20,26,27,28,29,30,31,32,16,17,18,19,26,27,28,29,30,31,32,17,18,26,27,28,29,30,31,32,26,27,28,29,30,31,32,26,27,28,29,30,31,32,25,26,27,28,29,30,31,32,24,25,26,27,28,29,30,31,23,24,25,26,27,28,29,30,31,22,23,24,25,26,27,28,29,30,21,22,23,24,25,26,27,28,29,20,21,22,23,24,25,26,27,28,19,20,21,22,23,24,25,26,27,17,18,19,20,21,22,23,24,25,26,16,17,18,19,20,21,22,23,24,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,50},
@@ -48,14 +49,60 @@ public class CreateFinalBoard {
                                 {226,153,108,66,26,33,82,132,183,179,41,0,0,0,0,0,0,0,0,85,221,108,2,0,0,0,0,0,0,0,0,0,0,41,196,154,0,0,0,0,0,0,0,0,0,0,0,0,0,18,216,207,16,0,0,0,0,0,86,154,138,49,0,0,0,0,0,107,96,0,0,0,0,0,107,219,48,0,0,0,0,8,205,47,0,0,0,0,9,215,174,0,0,0,0,0,92,225,5,0,0,0,0,49,228,24,0,0,0,0,34,187,0,0,0,0,0,64,76,0,0,0,0,4,226,194,0,0,0,0,0,38,96,0,0,0,0,0,197,228,9,0,0,0,0,1,178,229,76,0,0,0,0,0,161,51,0,0,0,0,0,25,159,225,206,152,51,0,0,0,0,0,0,143,116,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,150,225,46,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,177,195,18,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,205,216,100,4,0,0,0,0,0,15,115,61,0,0,0,0,5,228,210,168,130,108,128,166,225,36,0,0,0,0,30,219,5,0,0,0,0,82,119,0,0,0,0,0,187,203,66,175,203,14,0,0,0,0,62,217,40,0,1,83,148,196,195,139,14,0,0,0,0,0,169,226,62,0,0,0,0,0,0,0,0,0,0,0,0,0,62,92,0,0,0,0,0,0,0,0,0,0,0,0,0,86,225,124,16,0,0,0,0,0,0,0,0,0,0,1,122,218,118,19,0,0,0,0,0,0,3,63,164,210,176,142,125,145,169,230}};
                 
         int[] endPoints = {50, 102, 154, 210, 262, 314, 370, 422, 474};
+
+        BufferedImage img = preFillInBoxes(endPoints, blankGrids);
+
+        //Used to loop through all the number squares and recognize them
+        for (int yOverall = 0; yOverall < 9; yOverall++) {
+            
+            for (int xOverall = 0; xOverall < 9; xOverall++) {
+                
+                int xGrid = xOverall;
+                int yGrid = yOverall;
+                int sPointX = endPoints[xGrid] - 50;
+                int sPointY = endPoints[yGrid] - 50;
+                int number = boxGrid[yGrid][xGrid];
+                
+                for (int i = 0; i < numsDistX[number-1].length; i++) {
+                    
+                    img.setRGB(numsDistX[number-1][i] + sPointX, numsDistY[number-1][i] + sPointY, new Color(colorInPixel[number-1][i],colorInPixel[number-1][i],colorInPixel[number-1][i]).getRGB());
+                }
+            }
+            
+        }
         
-        BufferedImage img = null;
-        File f = new File("SBTemplate.png");  
         try{
-           img = ImageIO.read(f);
-         }catch(IOException e){
-           System.out.println(e);
-         }
+            File fOut = new File("/Users/akash/Desktop/completeSudokuBoard.png");
+            ImageIO.write(img, "png", fOut);
+
+          }catch(IOException e){
+            System.out.println(e);
+          }
+        
+    }
+    
+    public static BufferedImage createBlankTemplate() {
+        
+        int[] borderXYCord = {51,103,155,156,157,158,159,211,263,315,316,317,318,319,371,423};
+
+        BufferedImage img = new BufferedImage(475, 475, BufferedImage.TYPE_INT_ARGB); //Width and Height = 475
+        for (int i = 0; i < borderXYCord.length; i++) {
+            
+            for (int j = 0; j < img.getHeight(); j++) {
+                
+                img.setRGB(borderXYCord[i],j,new Color(0,0,0).getRGB());
+                img.setRGB(j,borderXYCord[i],new Color(0,0,0).getRGB());
+                
+            }
+        }
+        
+        return img;
+        
+    }
+    
+    public static BufferedImage preFillInBoxes(int[] endPoints, ArrayList<Integer> blankGrids) {
+        
+        BufferedImage img = createBlankTemplate();
         
         for (int y = 0; y < img.getHeight(); y++) {
              
@@ -101,40 +148,23 @@ public class CreateFinalBoard {
              }
              
          }
-
-        //Used to loop through all the number squares and recognize them
-        for (int yOverall = 0; yOverall < 9; yOverall++) {
-            
-            for (int xOverall = 0; xOverall < 9; xOverall++) {
-                
-                int xGrid = xOverall;
-                int yGrid = yOverall;
-                int sPointX = endPoints[xGrid] - 50;
-                int sPointY = endPoints[yGrid] - 50;
-                int number = boxGrid[yGrid][xGrid];
-                
-                for (int i = 0; i < numsDistX[number-1].length; i++) {
-                    
-                    img.setRGB(numsDistX[number-1][i] + sPointX, numsDistY[number-1][i] + sPointY, new Color(colorInPixel[number-1][i],colorInPixel[number-1][i],colorInPixel[number-1][i]).getRGB());
-                }
-            }
-            
-        }
-        
         return img;
+        
     }
+    
+    
     //Was used to generate the long arrays above
     public static void createArray(int[][] boxGrid, ArrayList<Integer> startPointsX, ArrayList<Integer> startPointsY, ArrayList<Integer> endPointsX, ArrayList<Integer> endPointsY) throws IOException {
 
-        ArrayList<ArrayList<Integer>> numsDistX = new ArrayList<ArrayList<Integer>>(); //Distance each pixel is from starting point of grid X
-        ArrayList<ArrayList<Integer>> numsDistY = new ArrayList<ArrayList<Integer>>(); //Distance each pixel is from starting point of grid Y
-        ArrayList<ArrayList<Integer>> colorInPixel = new ArrayList<ArrayList<Integer>>(); //Color in each pixel
+        ArrayList<ArrayList<Integer>> numsDistX = new ArrayList<>(); //Distance each pixel is from starting point of grid X
+        ArrayList<ArrayList<Integer>> numsDistY = new ArrayList<>(); //Distance each pixel is from starting point of grid Y
+        ArrayList<ArrayList<Integer>> colorInPixel = new ArrayList<>(); //Color in each pixel
 
         //Temporarily fills in the 2 multidimensional arraylists
         for (int i = 0; i < 9; i++) {
-            numsDistX.add(new ArrayList<Integer>());
-            numsDistY.add(new ArrayList<Integer>());
-            colorInPixel.add(new ArrayList<Integer>());
+            numsDistX.add(new ArrayList());
+            numsDistY.add(new ArrayList());
+            colorInPixel.add(new ArrayList());
         }
         
         for (int i = 1; i <= 9; i++) {
@@ -163,7 +193,7 @@ public class CreateFinalBoard {
             }
             
         }
-        //System.out.println(numsDistX);
+        
         FileWriter writer = new FileWriter("/Users/akash/software/Akash/java/SudokuSolver/src/sudokusolver/CreateFinalBoardArrayVals.txt"); 
         writer.write("{");
         for(int i = 0; i < numsDistX.size(); i++) {
