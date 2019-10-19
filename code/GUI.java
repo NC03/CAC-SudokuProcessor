@@ -38,7 +38,7 @@ public class GUI extends JFrame {
         setVisible(true);
         setSize(600, 400);
         try {
-            BufferedImage icon = ImageIO.read(new File("icon.png"));
+            BufferedImage icon = ImageIO.read(GUI.class.getResourceAsStream("icon.png"));
             setIconImage(icon);
 
         } catch (Exception ex) {
