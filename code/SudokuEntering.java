@@ -1,11 +1,9 @@
+package sudokusolver;
 
-import java.util.*;
-import java.io.*;
-import java.awt.image.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class SudokuEntering extends JFrame {
     private int[][] board;
@@ -62,6 +60,7 @@ public class SudokuEntering extends JFrame {
                     case "Solve":
                         try {
                             System.out.println("Solve");
+                            ArrayList<Integer> blankGrids = SudokuSolver.findBlankGrids(board);
                             int[][] solvedBoard = SudokuSolver.solveSudoku(board);
                             for(int[] row : solvedBoard)
                             {
@@ -71,7 +70,7 @@ public class SudokuEntering extends JFrame {
                                 System.out.println();
                             }
                             ImageDisplayer id = new ImageDisplayer(solvedBoard,
-                                    CreateFinalBoard.createBoard(solvedBoard, SudokuGraphicsProcessor.blankGrids));
+                                    CreateFinalBoard.createBoard(solvedBoard, blankGrids));
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
