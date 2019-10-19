@@ -179,18 +179,26 @@ public class SudokuEntering extends JFrame {
         }
         return -1;
     }
-
     public void drawButtons(Graphics g) {
         int y = getHeight() * 95 / 100;
         int btnHeight = getHeight() * 4 / 100;
         int btnWidth = getWidth() / 4;
+        int fontsize = GUI.findFontSize(btnWidth, btnHeight, buttonText[0], g, "Arial", Font.PLAIN);
+        for (int i = 0; i < buttonText.length; i++) {
+            int size = GUI.findFontSize(btnWidth, btnHeight, buttonText[i], g, "Arial", Font.PLAIN);
+            if (size < fontsize) {
+                fontsize = size;
+            }
+        }
+        g.setFont(new Font("Arial", Font.PLAIN, fontsize));
         buttonCoordinates = new int[buttonText.length][2][2];
         for (int i = 0; i < buttonText.length; i++) {
             int x = getWidth() * (i + 1) / (buttonText.length + 1);
             g.setColor(new Color(255, 255, 255));
             g.fillRect(x - btnWidth / 2, y - btnHeight / 2, btnWidth, btnHeight);
             g.setColor(new Color(0, 0, 0));
-            g.drawString(buttonText[i], x, y);
+            g.drawString(buttonText[i], x - g.getFontMetrics().stringWidth(buttonText[i]) / 2,
+                    y + g.getFontMetrics().getAscent() / 2);
             buttonCoordinates[i][0][0] = x - btnWidth / 2;
             buttonCoordinates[i][0][1] = y - btnHeight / 2;
             buttonCoordinates[i][1][0] = buttonCoordinates[i][0][0] + btnWidth;

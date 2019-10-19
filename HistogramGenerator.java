@@ -8,7 +8,7 @@ public class HistogramGenerator {
 
     public static void main(String[] args) {
         try {
-            BufferedImage bi = ImageIO.read(new File("GridNums/1.png"));
+            BufferedImage bi = ImageIO.read(new File("GridNums/2.png"));
             System.out.println(processImage(bi));
         } catch (Exception e) {
             //TODO: handle exception
