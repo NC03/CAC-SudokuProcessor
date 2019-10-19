@@ -61,7 +61,15 @@ public class SudokuEntering extends JFrame {
                     switch (buttonText[btnIdx]) {
                     case "Solve":
                         try {
+                            System.out.println("Solve");
                             int[][] solvedBoard = SudokuSolver.solveSudoku(board);
+                            for(int[] row : solvedBoard)
+                            {
+                                for(int elem:row){
+                                    System.out.print(elem);
+                                }
+                                System.out.println();
+                            }
                             ImageDisplayer id = new ImageDisplayer(solvedBoard,
                                     CreateFinalBoard.createBoard(solvedBoard, SudokuGraphicsProcessor.blankGrids));
                         } catch (Exception ex) {
@@ -113,10 +121,9 @@ public class SudokuEntering extends JFrame {
                 if (selectedIdx != -1) {
                     int i = selectedIdx / 9;
                     int j = selectedIdx % 9;
-                    try{
-                    board[i][j] = Integer.parseInt("" + e.getKeyChar());
-                    }catch(Exception ex)
-                    {
+                    try {
+                        board[i][j] = Integer.parseInt("" + e.getKeyChar());
+                    } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 }
@@ -145,29 +152,32 @@ public class SudokuEntering extends JFrame {
     }
 
     public void paintGrid(Graphics g) {
+
         int width = getWidth();
         int height = getHeight();
         int dim = Math.min(width, height) / 2 / 9;
         int fontsize = GUI.findFontSize(dim, dim, "0", g, "Arial", Font.PLAIN);
         for (int i = 0; i < buttonText.length; i++) {
-            int size = GUI.findFontSize(dim, dim, ""+i, g, "Arial", Font.PLAIN);
+            int size = GUI.findFontSize(dim, dim, "" + i, g, "Arial", Font.PLAIN);
             if (size < fontsize) {
                 fontsize = size;
             }
         }
         g.setFont(new Font("Arial", Font.PLAIN, fontsize));
+
         coordinates = new int[81][2][2];
         for (int n = 0; n < 81; n++) {
             int i = n / 9;
             int j = n % 9;
             int x = width / 2 - 4 * dim - dim / 2 + j * dim;
             int y = height / 2 - 4 * dim - dim / 2 + i * dim;
-            g.setColor(new Color(255,255,255));
-            g.fillRect(x,y,dim,dim);
+            g.setColor(new Color(255, 255, 255));
+            g.fillRect(x, y, dim, dim);
             g.setColor(new Color(0, 0, 0));
             g.drawRect(x, y, dim, dim);
             if (board[i][j] != 0) {
-                g.drawString("" + board[i][j], x+dim/2-g.getFontMetrics().stringWidth(""+board[i][j])/2, y + g.getFontMetrics().getAscent());
+                g.drawString("" + board[i][j], x + dim / 2 - g.getFontMetrics().stringWidth("" + board[i][j]) / 2,
+                        y + g.getFontMetrics().getAscent());
             }
             coordinates[n][0][0] = x;
             coordinates[n][0][1] = y;
@@ -175,9 +185,12 @@ public class SudokuEntering extends JFrame {
             coordinates[n][1][1] = y + dim;
             if (n == selectedIdx) {
                 g.setColor(new Color(255, 180, 0));
-                g.drawOval(x, y, dim, dim);
+                for (int k = 0; k < 3; k++) {
+                    g.drawOval(x + k, y + k, dim - 2 * k, dim - 2 * k);
+                }
             }
         }
+
         drawButtons(g);
     }
 
@@ -193,6 +206,7 @@ public class SudokuEntering extends JFrame {
         }
         return -1;
     }
+
     public void drawButtons(Graphics g) {
         int y = getHeight() * 95 / 100;
         int btnHeight = getHeight() * 4 / 100;

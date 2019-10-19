@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sudokusolver;
 
 /**
  *
@@ -119,6 +118,7 @@ public class ImageUtil
         return thresholdFilter(bi,(int)threshold);
     }
     
+     
     public static BufferedImage convToBlackWhite(BufferedImage bi)
     {
         BufferedImage out = new BufferedImage(bi.getWidth(), bi.getWidth(), BufferedImage.TYPE_INT_RGB); //Makes a square: W=H
@@ -126,6 +126,8 @@ public class ImageUtil
         ArrayList<Integer> colorFreq = new ArrayList<>();
         ArrayList<Integer> xCordInRow = new ArrayList<>();
         ArrayList<Integer> yCordInRow = new ArrayList<>();
+        int colorIndex0;
+        int colorFreq0;
         
         //Fills up arraylist colorsInRow and colorFreq
         for (int a = 0; a < bi.getWidth(); a++) {
@@ -166,6 +168,9 @@ public class ImageUtil
             
         }
         
+        colorIndex0 = colorsInRow.get(0);
+        colorFreq0 = colorFreq.get(0);
+        
         System.out.println(colorsInRow);
         System.out.println(colorFreq);
         
@@ -180,6 +185,8 @@ public class ImageUtil
             }
             
         }
+        System.out.println(colorIndex0);
+        System.out.println(colorFreq0);
         
         //Sees which x and y coordinates occur < 50 times
         for (int a = 0; a < bi.getWidth(); a++) {
@@ -222,7 +229,7 @@ public class ImageUtil
                 
                 for (int i = 0; i < largerCordInRowSize; i++) {
                     try{
-                        if (x == xCordInRow.get(i) || y == yCordInRow.get(i) || (p < colorsInRow.get(0) && colorFreq.get(0) > 70) && colorFreq.get(0) < 180) {
+                        if (x == xCordInRow.get(i) || y == yCordInRow.get(i) || (p < colorIndex0 && colorFreq0 > 70 && colorFreq0 < 180) || p < 100) {
 
                             out.setRGB(x, y, SudokuGraphicsProcessor.blackColor);
                             break;
@@ -240,5 +247,48 @@ public class ImageUtil
         
         return out;
     }
+
+    // public static BufferedImage convToBlackWhite(BufferedImage bi) {
+    //     List<Color> colors = new ArrayList<Color>();
+    //     List<Integer> nums = new ArrayList<Integer>();
+
+    //     for (int i = 0; i < bi.getWidth(); i++) {
+    //         for (int j = 0; j < bi.getHeight(); j++) {
+    //             Color c = new Color(bi.getRGB(i, j));
+    //             boolean flag = false;
+    //             for (int k = 0; k < colors.size(); k++) {
+    //                 if (colors.get(k).getRed() == c.getRed()) {
+    //                     nums.set(k, nums.get(k) + 1);
+    //                     flag = true;
+    //                 }
+    //             }
+    //             if (!flag && c.getRed() < 128) {
+    //                 colors.add(c);
+    //                 nums.add(0);
+    //             }
+    //         }
+    //     }
+    //     int maxIdx = 0;
+    //     for(int i = 0; i < nums.size(); i++)
+    //     {
+    //         if(nums.get(i)>nums.get(maxIdx)){
+    //             maxIdx = i;
+    //         }
+    //     }
+
+    //     for (int i = 0; i < bi.getWidth(); i++) {
+    //         for (int j = 0; j < bi.getHeight(); j++) {
+    //             Color c = new Color(bi.getRGB(i,j));
+    //             if(c.getRed() == colors.get(maxIdx).getRed())
+    //             {
+    //                 bi.setRGB(i,j,new Color(0,0,0).getRGB());
+    //             }else{
+    //                 bi.setRGB(i,j,new Color(255,255,255).getRGB());
+    //             }
+    //         }
+    //     }
+    //     return bi;
+
+    // }
     
 }
