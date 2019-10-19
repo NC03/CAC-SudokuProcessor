@@ -1,15 +1,32 @@
+package sudokusolver;
 
-/**
- *
- * @author akash
- */
-import java.io.IOException;
+import java.util.ArrayList;
 
 public class SudokuSolver {
 
     public static int[][] boxGrid = new int[9][9];
     int width;
     int height;
+    
+    public static ArrayList<Integer> findBlankGrids(int[][] boxGrid) {
+        
+        ArrayList<Integer> blankGrids = new ArrayList<>();
+        for (int y = 0; y < boxGrid.length; y++) {
+            
+            for (int x = 0; x < boxGrid.length; x++) {
+            
+                if (boxGrid[y][x] == 0) {
+                    
+                    blankGrids.add((y*9) + x);
+                    
+                }
+                
+            }
+            
+        }
+        return blankGrids;
+        
+    }
     
     public static void print() {
         
