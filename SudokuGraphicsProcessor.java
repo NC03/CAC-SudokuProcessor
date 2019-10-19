@@ -1,4 +1,3 @@
-package sudokusolver;
 
 /**
  *
@@ -16,7 +15,7 @@ public class SudokuGraphicsProcessor {
     public static final int whiteColor = -1; //white
     public static ArrayList<Integer> blankGrids = new ArrayList<>();
     
-    public static int[][] parseImage(File f) throws IOException { 
+    public static int[][] parseImage(BufferedImage imgInit) throws IOException { 
         
         int[][] boxGrid = new int[9][9];
 
@@ -40,13 +39,13 @@ public class SudokuGraphicsProcessor {
         }
         
         
-        BufferedImage imgInit = null;
+        // BufferedImage imgInit = null;
         
-        try{
-          imgInit = ImageIO.read(f);
-        }catch(IOException e){
-          System.out.println(e);
-        }
+        // try{
+        //   imgInit = ImageIO.read(f);
+        // }catch(IOException e){
+        //   System.out.println(e);
+        // }
         ImageUtil iU = new ImageUtil();
         BufferedImage img = iU.grayscale(imgInit);
         int overallWidth = img.getWidth();
@@ -126,15 +125,15 @@ public class SudokuGraphicsProcessor {
         //USE THIS AS THE NEW THRESHOLD THING -- The rest wont work until it converts all the grid borders to black
         BufferedImage imgSpliced = iU.splice(img, startX, startY, endX, endY);
         BufferedImage imgBW = iU.convToBlackWhite(imgSpliced);
-        //For testing purposes
+        // For testing purposes
         try{
-            File fGrid = new File("/Users/akash/Desktop/imgBW.png");
+            File fGrid = new File("=imgBW.png");
             ImageIO.write(imgBW, "png", fGrid);
           }catch(IOException e){
             System.out.println(e);
           }
         try{
-            File fGrid = new File("/Users/akash/Desktop/imgSpliced.png");
+            File fGrid = new File("imgSpliced.png");
             ImageIO.write(imgSpliced, "png", fGrid);
           }catch(IOException e){
             System.out.println(e);
@@ -272,15 +271,15 @@ public class SudokuGraphicsProcessor {
         }
         System.out.println("Blank Grids.size(): " + blankGrids.size());
         //Deletes all previous grid images in this folder (temporary)
-        File file = new File("/Users/akash/Desktop/GridImgs/");      
-        String[] myFiles;    
-        if (file.isDirectory()) {
-            myFiles = file.list();
-            for (int i = 0; i < myFiles.length; i++) {
-                File myFile = new File(file, myFiles[i]); 
-                myFile.delete();
-            }
-        }
+        // File file = new File("/Users/akash/Desktop/GridImgs/");      
+        // String[] myFiles;    
+        // if (file.isDirectory()) {
+        //     myFiles = file.list();
+        //     for (int i = 0; i < myFiles.length; i++) {
+        //         File myFile = new File(file, myFiles[i]); 
+        //         myFile.delete();
+        //     }
+        // }
         
         //Used to loop through all the number squares and recognize them
         for (int yOverall = 0; yOverall < 9; yOverall++) {
@@ -300,13 +299,13 @@ public class SudokuGraphicsProcessor {
                     int x = HistogramGenerator.processImage(indivGridImg);
                     boxGrid[yGrid][xGrid] = x;
                     //write image: not needed (just for testing purposes)
-                    try{
-                      File fGrid = new File("/Users/akash/Desktop/GridImgs/gridImg" + xGrid + "-" + yGrid + ".png");
-                      ImageIO.write(indivGridImg, "png", fGrid);
+                    // try{
+                    //   File fGrid = new File("/Users/akash/Desktop/GridImgs/gridImg" + xGrid + "-" + yGrid + ".png");
+                    //   ImageIO.write(indivGridImg, "png", fGrid);
                       
-                    }catch(IOException e){
-                      System.out.println(e);
-                    }
+                    // }catch(IOException e){
+                    //   System.out.println(e);
+                    // }
                     
                 }
             
