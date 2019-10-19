@@ -126,6 +126,8 @@ public class ImageUtil
         ArrayList<Integer> colorFreq = new ArrayList<>();
         ArrayList<Integer> xCordInRow = new ArrayList<>();
         ArrayList<Integer> yCordInRow = new ArrayList<>();
+        int colorIndex0;
+        int colorFreq0;
         
         //Fills up arraylist colorsInRow and colorFreq
         for (int a = 0; a < bi.getWidth(); a++) {
@@ -166,6 +168,9 @@ public class ImageUtil
             
         }
         
+        colorIndex0 = colorsInRow.get(0);
+        colorFreq0 = colorFreq.get(0);
+        
         System.out.println(colorsInRow);
         System.out.println(colorFreq);
         
@@ -180,6 +185,8 @@ public class ImageUtil
             }
             
         }
+        System.out.println(colorIndex0);
+        System.out.println(colorFreq0);
         
         //Sees which x and y coordinates occur < 50 times
         for (int a = 0; a < bi.getWidth(); a++) {
@@ -222,7 +229,7 @@ public class ImageUtil
                 
                 for (int i = 0; i < largerCordInRowSize; i++) {
                     try{
-                        if (x == xCordInRow.get(i) || y == yCordInRow.get(i) || (p < colorsInRow.get(0) && colorFreq.get(0) > 70 && colorFreq.get(0) < 180)) {
+                        if (x == xCordInRow.get(i) || y == yCordInRow.get(i) || (p < colorIndex0 && colorFreq0 > 70 && colorFreq0 < 180)) {
 
                             out.setRGB(x, y, SudokuGraphicsProcessor.blackColor);
                             break;
