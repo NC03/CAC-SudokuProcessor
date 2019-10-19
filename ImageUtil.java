@@ -33,9 +33,9 @@ public class ImageUtil {
      *         and y2 to y2(not inclusive)
      */
     public static BufferedImage splice(BufferedImage bi, int x1, int y1, int x2, int y2) {
-        BufferedImage out = new BufferedImage(x2 - x1 + 1, y2 - y1 + 1, BufferedImage.TYPE_INT_RGB);
-        for (int j = y1; j <= y2; j++) {
-            for (int i = x1; i <= x2; i++) {
+        BufferedImage out = new BufferedImage(Math.abs(x2 - x1) + 1, Math.abs(y2 - y1) + 1, BufferedImage.TYPE_INT_RGB);
+        for (int j = Math.min(y1,y2); j <= Math.max(y1,y2); j++) {
+            for (int i = Math.min(x1,x2); i <= Math.max(x1,x2); i++) {
                 out.setRGB(i - x1, j - y1, bi.getRGB(i, j));
             }
         }
