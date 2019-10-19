@@ -1,5 +1,4 @@
 
-import java.util.*;
 import java.io.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
@@ -8,17 +7,20 @@ import java.awt.event.*;
 import java.awt.*;
 
 /**
- * Write a description of class ImageCropper here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * An interface with the user to display the solved board as an image
+ * 
+ * @author Nick
+ * @version 1.0
  */
 public class ImageDisplayer extends JFrame {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private BufferedImage inputImage;
     private BufferedImage scaledImage;
-    private int[][] coordinates;
     private int[][] bounds;
-    private boolean pressed;
     private boolean show;
     private String[] buttonText = { "Save Image", "Export Board", "Close" };
     private int[][][] buttonCoordinates;
@@ -41,9 +43,9 @@ public class ImageDisplayer extends JFrame {
         return show;
     }
 
-    public ImageDisplayer(int[][] board, BufferedImage bi) {
+    public ImageDisplayer(int[][] b, BufferedImage bi) {
         super("Image Cropper");
-        this.board = board;
+        this.board = b;
         show = true;
         inputImage = bi;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,5 +1,4 @@
 
-import java.util.*;
 import java.io.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
@@ -8,17 +7,20 @@ import java.awt.event.*;
 import java.awt.*;
 
 /**
- * Write a description of class ImageCropper here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * An interface with the user to crop the input image
+ * 
+ * @author Nick
+ * @version 1.0
  */
 public class ImageCropper extends JFrame {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private BufferedImage inputImage;
     private BufferedImage scaledImage;
     private int[][] coordinates;
     private int[][] bounds;
-    private boolean pressed;
     private boolean show;
     private String[] buttonText = { "Proceed", "Crop", "Cancel" };
     private int[][][] buttonCoordinates;
@@ -74,7 +76,7 @@ public class ImageCropper extends JFrame {
                     switch (buttonText[idx]) {
                     case "Proceed":
                         try {
-                            SudokuEntering se3 = new SudokuEntering(SudokuGraphicsProcessor.parseImage(inputImage));
+                            new SudokuEntering(SudokuGraphicsProcessor.parseImage(inputImage));
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -92,7 +94,7 @@ public class ImageCropper extends JFrame {
                                 }
                                 System.out.println();
                             }
-                            SudokuEntering se = new SudokuEntering(board);
+                            new SudokuEntering(board);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }

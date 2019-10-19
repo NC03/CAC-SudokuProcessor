@@ -1,11 +1,22 @@
-package sudokusolver;
+
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * An interface with the user to edit the sudoku board values
+ * 
+ * @author Nick
+ * @version 1.0
+ */
 public class SudokuEntering extends JFrame {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
     private int[][] board;
     private int[][][] coordinates;
     private int selectedIdx = -1;
@@ -62,15 +73,13 @@ public class SudokuEntering extends JFrame {
                             System.out.println("Solve");
                             ArrayList<Integer> blankGrids = SudokuSolver.findBlankGrids(board);
                             int[][] solvedBoard = SudokuSolver.solveSudoku(board);
-                            for(int[] row : solvedBoard)
-                            {
-                                for(int elem:row){
+                            for (int[] row : solvedBoard) {
+                                for (int elem : row) {
                                     System.out.print(elem);
                                 }
                                 System.out.println();
                             }
-                            ImageDisplayer id = new ImageDisplayer(solvedBoard,
-                                    CreateFinalBoard.createBoard(solvedBoard, blankGrids));
+                            new ImageDisplayer(solvedBoard, CreateFinalBoard.createBoard(solvedBoard, blankGrids));
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }

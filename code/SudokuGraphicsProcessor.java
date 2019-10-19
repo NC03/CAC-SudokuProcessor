@@ -1,4 +1,5 @@
 
+
 /**
  *
  * @author akash
@@ -130,7 +131,7 @@ public class SudokuGraphicsProcessor {
         // try {
         //     ImageIO.write(imgBW,"png",new File("imgBW.png"));
         // } catch (Exception e) {
-        //     //TODO: handle exception
+        //     //handle exception
         // }
 
         // int width = imgBW.getWidth() / 9;
@@ -145,7 +146,7 @@ public class SudokuGraphicsProcessor {
         //             int x = HistogramGenerator.processImage(indivGridImg);
         //         boxGrid[j][i] = x;
         //         } catch (Exception e) {
-        //             //TODO: handle exception
+        //             //handle exception
         //         }
                 
         //     }

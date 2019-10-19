@@ -1,4 +1,4 @@
-import java.util.*;
+
 import java.io.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
@@ -6,8 +6,14 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 
+/**
+ * The main interface with the user
+ * 
+ * @author Nick
+ * @version 1.0
+ */
 public class GUI extends JFrame {
-    private String state = "mainScreen";
+    private static final long serialVersionUID = 1L;
     private String[] buttons = { "Import from a picture", "Enter the problem", "Load from file" };
     private int[][][] coordinates;
     private int highlightedIdx;
@@ -15,13 +21,35 @@ public class GUI extends JFrame {
     private double hue = 0;
 
     public static void main(String[] args) {
-        GUI g = new GUI();
+        new GUI();
     }
 
+    /**
+     * Determines whether the given String using the Font of a gived Graphics object
+     * will fit inside the specified dimensions
+     * 
+     * @param width  The width dimension to check against
+     * @param height The height dimension to check against
+     * @param str    The string to check
+     * @param g      The Graphics object containing the Font to check against
+     * @return The boolean value true if the font fits, and false otherwise
+     */
     public static boolean fontFits(int width, int height, String str, Graphics g) {
         return g.getFontMetrics().stringWidth(str) <= width && g.getFontMetrics().getHeight() <= height;
     }
 
+    /**
+     * Determines the largest font size that fits within the specified dimensions by
+     * iteratively increasing the font size
+     * 
+     * @param width  The width dimension to check against
+     * @param height The height dimension to check against
+     * @param str    The string to check
+     * @param g      The graphics object to check in
+     * @param font   The font name to be used to construct the Font object
+     * @param type   The font type to be used to construct the Font object
+     * @return int font size to be used in the constructor of the Font object
+     */
     public static int findFontSize(int width, int height, String str, Graphics g, String font, int type) {
         int size = 1;
         g.setFont(new Font(font, type, size));
@@ -32,6 +60,9 @@ public class GUI extends JFrame {
         return size - 1;
     }
 
+    /**
+     * Creates the GUI object
+     */
     public GUI() {
         super("Sudoku Solver");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,7 +113,7 @@ public class GUI extends JFrame {
                         if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                             try {
                                 BufferedImage bi = ImageIO.read(fc.getSelectedFile());
-                                ImageCropper ic = new ImageCropper(bi);
+                                new ImageCropper(bi);
                             } catch (Exception ex) {
                                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error:",
                                         JOptionPane.ERROR_MESSAGE);
@@ -90,7 +121,7 @@ public class GUI extends JFrame {
                         }
                         break;
                     case 1:
-                        SudokuEntering se = new SudokuEntering();
+                        new SudokuEntering();
                         break;
                     case 2:
                         JFileChooser fc2 = new JFileChooser();
@@ -110,7 +141,7 @@ public class GUI extends JFrame {
                                         board[i][j] = Integer.parseInt(boardStr[i][j]);
                                     }
                                 }
-                                SudokuEntering se2 = new SudokuEntering(board);
+                                new SudokuEntering(board);
                             } catch (Exception ex) {
                                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Error:",
                                         JOptionPane.ERROR_MESSAGE);
@@ -136,6 +167,13 @@ public class GUI extends JFrame {
         });
     }
 
+    /**
+     * Returns which button was selected
+     * 
+     * @param x The x-coordinate
+     * @param y The y-coordinate
+     * @return the index of the button that contains the coordinate, otherwise -1
+     */
     public int getIdx(int x, int y) {
         for (int i = 0; i < buttons.length; i++) {
             int xMin = Math.min(coordinates[i][0][0], coordinates[i][1][0]);
@@ -149,6 +187,11 @@ public class GUI extends JFrame {
         return -1;
     }
 
+    /**
+     * Paints the Graphics
+     * 
+     * @param g The Graphics object to paint in
+     */
     public void paint(Graphics g) {
         g.clearRect(0, 0, getWidth(), getHeight());
         g.setColor(new Color(Color.HSBtoRGB((float) hue, 1, 1)));
@@ -158,6 +201,11 @@ public class GUI extends JFrame {
         paintButtons(g);
     }
 
+    /**
+     * Paints the butttons
+     * 
+     * @param g The Graphics object to paint in
+     */
     public void paintButtons(Graphics g) {
         int width = getWidth();
         int height = getHeight();
