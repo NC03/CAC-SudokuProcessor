@@ -54,11 +54,6 @@ public class ImageDisplayer extends JFrame {
             }
 
             public void mouseDragged(MouseEvent e) {
-                if (inViewport(e.getX(), e.getY())) {
-                    coordinates[1][0] = e.getX();
-                    coordinates[1][1] = e.getY();
-                }
-
                 repaint();
             }
         });
@@ -116,42 +111,12 @@ public class ImageDisplayer extends JFrame {
             }
 
             public void mousePressed(MouseEvent e) {
-                if (inViewport(e.getX(), e.getY())) {
-                    coordinates = new int[2][2];
-                    coordinates[0][0] = e.getX();
-                    coordinates[0][1] = e.getY();
-                    coordinates[1][0] = e.getX();
-                    coordinates[1][1] = e.getY();
-                }
                 repaint();
             }
 
         });
     }
 
-    public BufferedImage getCroppedImage() {
-        int viewportWidth = bounds[1][0] - bounds[0][0];
-        int viewportHeight = bounds[1][1] - bounds[0][1];
-        int x1 = (int) (inputImage.getWidth() * ((double) Math.min(coordinates[0][0], coordinates[1][0]) - bounds[0][0])
-                / viewportWidth);
-        int x2 = (int) (inputImage.getWidth() * ((double) Math.max(coordinates[0][0], coordinates[1][0]) - bounds[0][0])
-                / viewportWidth);
-        int y1 = (int) (inputImage.getHeight()
-                * ((double) Math.min(coordinates[0][1], coordinates[1][1]) - bounds[0][1]) / viewportHeight);
-        int y2 = (int) (inputImage.getHeight()
-                * ((double) Math.max(coordinates[0][1], coordinates[1][1]) - bounds[0][1]) / viewportHeight);
-        return crop(inputImage, x1, x2, y1, y2);
-    }
-
-    public static BufferedImage crop(BufferedImage bi, int x1, int x2, int y1, int y2) {
-        BufferedImage out = new BufferedImage(x2 - x1, y2 - y1, BufferedImage.TYPE_INT_RGB);
-        for (int i = y1; i < y2; i++) {
-            for (int j = x1; j < x2; j++) {
-                out.setRGB(j - x1, i - y1, bi.getRGB(j, i));
-            }
-        }
-        return out;
-    }
 
     public boolean inViewport(int x, int y) {
         int xMin = Math.min(bounds[0][0], bounds[1][0]);
@@ -233,42 +198,28 @@ public class ImageDisplayer extends JFrame {
 
         g.drawImage(scaledImage, bounds[0][0], bounds[0][1], new Color(0, 0, 0), null);
 
-        if (coordinates != null) {
-            for (int i = 0; i < 2; i++) {
-                if (coordinates[i][0] >= bounds[1][0]) {
-                    coordinates[i][0] = bounds[1][0];
-                }
-                if (coordinates[i][0] < bounds[0][0]) {
-                    coordinates[i][0] = bounds[0][0];
-                }
-                if (coordinates[i][1] >= bounds[1][1]) {
-                    coordinates[i][1] = bounds[1][1];
-                }
-                if (coordinates[i][1] < bounds[0][1]) {
-                    coordinates[i][1] = bounds[0][1];
-                }
-            }
-            int x1 = Math.min(coordinates[0][0], coordinates[1][0]);
-            int x2 = Math.max(coordinates[0][0], coordinates[1][0]);
-            int y1 = Math.min(coordinates[0][1], coordinates[1][1]);
-            int y2 = Math.max(coordinates[0][1], coordinates[1][1]);
-            g.setColor(new Color(0, 0, 0, 80));
-            g.fillRect(x1, y1, x2 - x1, y2 - y1);
-        }
-
     }
 
     public void drawButtons(Graphics g) {
         int y = getHeight() * 95 / 100;
         int btnHeight = getHeight() * 4 / 100;
         int btnWidth = getWidth() / 4;
+        int fontsize = GUI.findFontSize(btnWidth, btnHeight, buttonText[0], g, "Arial", Font.PLAIN);
+        for (int i = 0; i < buttonText.length; i++) {
+            int size = GUI.findFontSize(btnWidth, btnHeight, buttonText[i], g, "Arial", Font.PLAIN);
+            if (size < fontsize) {
+                fontsize = size;
+            }
+        }
+        g.setFont(new Font("Arial", Font.PLAIN, fontsize));
         buttonCoordinates = new int[buttonText.length][2][2];
         for (int i = 0; i < buttonText.length; i++) {
             int x = getWidth() * (i + 1) / (buttonText.length + 1);
             g.setColor(new Color(255, 255, 255));
             g.fillRect(x - btnWidth / 2, y - btnHeight / 2, btnWidth, btnHeight);
             g.setColor(new Color(0, 0, 0));
-            g.drawString(buttonText[i], x, y);
+            g.drawString(buttonText[i], x - g.getFontMetrics().stringWidth(buttonText[i]) / 2,
+                    y + g.getFontMetrics().getAscent() / 2);
             buttonCoordinates[i][0][0] = x - btnWidth / 2;
             buttonCoordinates[i][0][1] = y - btnHeight / 2;
             buttonCoordinates[i][1][0] = buttonCoordinates[i][0][0] + btnWidth;

@@ -20,7 +20,7 @@ public class ImageCropper extends JFrame {
     private int[][] bounds;
     private boolean pressed;
     private boolean show;
-    private String[] buttonText = { "Crop", "Cancel" };
+    private String[] buttonText = { "Proceed", "Crop", "Cancel" };
     private int[][][] buttonCoordinates;
 
     public int getIdx(int x, int y) {
@@ -72,10 +72,19 @@ public class ImageCropper extends JFrame {
                 int idx = getIdx(e.getX(), e.getY());
                 if (idx != -1) {
                     switch (buttonText[idx]) {
+                    case "Proceed":
+                        try {
+                            SudokuEntering se3 = new SudokuEntering(SudokuGraphicsProcessor.parseImage(inputImage));
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                        dispose();
+                        break;
                     case "Crop":
                         BufferedImage bi = getCroppedImage();
                         try {
-                            ImageIO.write(bi,"png",new File("testOutput.png"));
+                            // TEST
+                            ImageIO.write(bi, "png", new File("testOutput.png"));
                             int[][] board = SudokuGraphicsProcessor.parseImage(bi);
                             for (int[] row : board) {
                                 for (int bo : row) {

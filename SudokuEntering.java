@@ -69,7 +69,7 @@ public class SudokuEntering extends JFrame {
                         }
                         dispose();
                         break;
-                    case "Close":
+                    case "Cancel":
                         dispose();
                         break;
                     }
@@ -113,7 +113,12 @@ public class SudokuEntering extends JFrame {
                 if (selectedIdx != -1) {
                     int i = selectedIdx / 9;
                     int j = selectedIdx % 9;
+                    try{
                     board[i][j] = Integer.parseInt("" + e.getKeyChar());
+                    }catch(Exception ex)
+                    {
+                        ex.printStackTrace();
+                    }
                 }
                 repaint();
             }
@@ -140,20 +145,29 @@ public class SudokuEntering extends JFrame {
     }
 
     public void paintGrid(Graphics g) {
-        g.setFont(new Font("Arial", Font.PLAIN, 24));
         int width = getWidth();
         int height = getHeight();
         int dim = Math.min(width, height) / 2 / 9;
+        int fontsize = GUI.findFontSize(dim, dim, "0", g, "Arial", Font.PLAIN);
+        for (int i = 0; i < buttonText.length; i++) {
+            int size = GUI.findFontSize(dim, dim, ""+i, g, "Arial", Font.PLAIN);
+            if (size < fontsize) {
+                fontsize = size;
+            }
+        }
+        g.setFont(new Font("Arial", Font.PLAIN, fontsize));
         coordinates = new int[81][2][2];
         for (int n = 0; n < 81; n++) {
             int i = n / 9;
             int j = n % 9;
             int x = width / 2 - 4 * dim - dim / 2 + j * dim;
             int y = height / 2 - 4 * dim - dim / 2 + i * dim;
+            g.setColor(new Color(255,255,255));
+            g.fillRect(x,y,dim,dim);
             g.setColor(new Color(0, 0, 0));
             g.drawRect(x, y, dim, dim);
             if (board[i][j] != 0) {
-                g.drawString("" + board[i][j], x, y + g.getFontMetrics().getAscent());
+                g.drawString("" + board[i][j], x+dim/2-g.getFontMetrics().stringWidth(""+board[i][j])/2, y + g.getFontMetrics().getAscent());
             }
             coordinates[n][0][0] = x;
             coordinates[n][0][1] = y;
