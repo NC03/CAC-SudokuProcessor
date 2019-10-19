@@ -222,7 +222,7 @@ public class ImageUtil
                 
                 for (int i = 0; i < largerCordInRowSize; i++) {
                     try{
-                        if (x == xCordInRow.get(i) || y == yCordInRow.get(i) || (p < colorsInRow.get(0) && colorFreq.get(0) > 70) && colorFreq.get(0) < 180) {
+                        if (x == xCordInRow.get(i) || y == yCordInRow.get(i) || (p < colorsInRow.get(0) && colorFreq.get(0) > 70 && colorFreq.get(0) < 180)) {
 
                             out.setRGB(x, y, SudokuGraphicsProcessor.blackColor);
                             break;
