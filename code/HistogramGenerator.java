@@ -463,7 +463,7 @@ public class HistogramGenerator {
         // trainModel();
         // testPrecedence();
         String[] directories = { "COM/", "CoolMath/", "NYT/", "WEB/" };
-        String prefix = "GridNums/";
+        String prefix = "test/GridNums/";
         for (int i = 0; i < directories.length; i++) {
             for (int j = 1; j < 10; j++) {
                 try {
@@ -510,7 +510,7 @@ public class HistogramGenerator {
                     // System.out.println(rowErrors[j - 1]);
                     // System.out.println(colErrors[j - 1]);
                     // }
-                    System.out.println(processImage(bi));
+                    System.out.println(processImage(bi)+" : "+prefix + directories[i] + j + ".png");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -647,6 +647,11 @@ public class HistogramGenerator {
                     num = sw.endNum();
                 }
             }
+        }
+        try {
+            ImageIO.write(bi,"png",new File("testOut/"+num+":"+(int)(Math.random()*1000)+".png"));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return num;
     }
