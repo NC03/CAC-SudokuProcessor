@@ -463,47 +463,55 @@ public class HistogramGenerator {
         // generateModel("GridNums/NYT/");
         // trainModel();
         // testPrecedence();
-        int[][] precedence = { {7,1},{2,3},{5,6},{5,8},{8,1},{2,1},{2,3}};
-        double[] allowedRowError = {0.25, 0.036,0.0015,0.02,0.05,0.011,0.024};
-        double[] allowedColError = { 0.4, 0.4, 0.4, 0.4 };
         String[] directories = { "COM/", "CoolMath/", "NYT/", "WEB/" };
         String prefix = "GridNums/";
         for (int i = 0; i < directories.length; i++) {
             for (int j = 1; j < 10; j++) {
                 try {
                     BufferedImage bi = ImageIO.read(new File(prefix + directories[i] + j + ".png"));
-                    Color c = new Color(0, 0, 0);
-                    double[] rowHist = process(rowHistogram(bi, c));
-                    double[] colHist = process(colHistogram(bi, c));
-                    double[] rowErrors = new double[9];
-                    double[] colErrors = new double[9];
-                    for (int k = 0; k < rowErrors.length; k++) {
-                        rowErrors[k] = error(model[k][0], rowHist);
-                        colErrors[k] = error(model[k][1], colHist);
-                    }
-                    int num = minIdx(rowErrors) + 1;
-                    boolean changed = false;
-                    for (int k = 0; k < precedence.length; k++) {
-                        if (!changed && precedence[k][0] == num) {
-                            double[] errors2 = new double[precedence[k].length - 1];
-                            for (int l = 0; l < errors2.length; l++) {
-                                errors2[l] = colErrors[precedence[k][l]];
-                            }
-                            int newIdx = minIdx(errors2);
-                            if (Math.abs(
-                                    rowErrors[precedence[k][newIdx + 1]] - rowErrors[num - 1]) < allowedRowError[k]) {
-                                num = precedence[k][newIdx + 1];
-                                changed = true;
-                            } else {
-                                changed = false;
-                            }
-                        }
-                    }
-                    if (num != j) {
-                        System.out.println(num + "->" + j);
-                        System.out.println(Math.abs(rowErrors[num - 1] - rowErrors[j - 1]));
-                        System.out.println(Math.abs(colErrors[num - 1] - colErrors[j - 1]));
-                    }
+                    // Color c = new Color(0, 0, 0);
+                    // double[] rowHist = process(rowHistogram(bi, c));
+                    // double[] colHist = process(colHistogram(bi, c));
+                    // double[] rowErrors = new double[9];
+                    // double[] colErrors = new double[9];
+                    // for (int k = 0; k < rowErrors.length; k++) {
+                    // rowErrors[k] = error(model[k][0], rowHist);
+                    // colErrors[k] = error(model[k][1], colHist);
+                    // }
+                    // int num = minIdx(rowErrors) + 1;
+                    // boolean change = false;
+                    // for (Swap sw : Swap.swaps) {
+                    // if (sw.change(num) && !change) {
+                    // if (sw.valid(rowErrors[sw.endNum() - 1], colErrors[sw.endNum() - 1])) {
+                    // change = true;
+                    // num = sw.endNum();
+                    // }
+                    // }
+                    // }
+                    // // boolean changed = false;
+                    // // for (int k = 0; k < precedence.length; k++) {
+                    // // if (!changed && precedence[k][0] == num) {
+                    // // double[] errors2 = new double[precedence[k].length - 1];
+                    // // for (int l = 0; l < errors2.length; l++) {
+                    // // errors2[l] = colErrors[precedence[k][l]];
+                    // // }
+                    // // int newIdx = minIdx(errors2);
+                    // // if (Math.abs(
+                    // // rowErrors[precedence[k][newIdx + 1]] - rowErrors[num - 1]) <
+                    // // allowedRowError[k]) {
+                    // // num = precedence[k][newIdx + 1];
+                    // // changed = true;
+                    // // } else {
+                    // // changed = false;
+                    // // }
+                    // // }
+                    // // }
+                    // if (num != j) {
+                    // System.out.println(num + "->" + j);
+                    // System.out.println(rowErrors[j - 1]);
+                    // System.out.println(colErrors[j - 1]);
+                    // }
+                    System.out.println(processImage(bi));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -625,11 +633,23 @@ public class HistogramGenerator {
         Color c = new Color(0, 0, 0);
         double[] rowHist = process(rowHistogram(bi, c));
         double[] colHist = process(colHistogram(bi, c));
-        double[] errors = new double[9];
-        for (int i = 0; i < 9; i++) {
-            errors[i] = error(model[i][0], rowHist) + error(model[i][1], colHist);
+        double[] rowErrors = new double[9];
+        double[] colErrors = new double[9];
+        for (int k = 0; k < rowErrors.length; k++) {
+            rowErrors[k] = error(model[k][0], rowHist);
+            colErrors[k] = error(model[k][1], colHist);
         }
-        return minIdx(errors) + 1;
+        int num = minIdx(rowErrors) + 1;
+        boolean change = false;
+        for (Swap sw : Swap.swaps) {
+            if (sw.change(num) && !change) {
+                if (sw.valid(rowErrors[sw.endNum() - 1], colErrors[sw.endNum() - 1])) {
+                    change = true;
+                    num = sw.endNum();
+                }
+            }
+        }
+        return num;
     }
 
     public static int processImage(BufferedImage bi, double weight) {
