@@ -1,5 +1,4 @@
 
-
 /**
  *
  * @author akash
@@ -17,7 +16,6 @@ public class SudokuGraphicsProcessor {
     public static ArrayList<Integer> blankGrids = new ArrayList<Integer>();
 
     public static int[][] parseImage(BufferedImage imgInit) throws IOException {
-
         int[][] boxGrid = new int[9][9];
 
         int startX = 0;
@@ -27,25 +25,11 @@ public class SudokuGraphicsProcessor {
 
         ArrayList<ArrayList<Integer>> colorsInEachGrid = new ArrayList<ArrayList<Integer>>();
 
-        // Set up boxGridInitial Array
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                boxGrid[i][j] = -1;
-            }
-        }
-
         // Temporarily fills multi-dem arraylist
         for (int i = 0; i < 81; i++) {
             colorsInEachGrid.add(new ArrayList<Integer>());
         }
 
-        // BufferedImage imgInit = null;
-
-        // try{
-        // imgInit = ImageIO.read(f);
-        // }catch(IOException e){
-        // System.out.println(e);
-        // }
         BufferedImage img = ImageUtil.grayscale(imgInit);
         int overallWidth = img.getWidth();
         int overallHeight = img.getHeight();
@@ -85,7 +69,6 @@ public class SudokuGraphicsProcessor {
             }
             if (isDoneS) {
                 break;
-
             }
         }
 
@@ -119,7 +102,6 @@ public class SudokuGraphicsProcessor {
             }
             if (isDoneE) {
                 break;
-
             }
         }
 
@@ -128,221 +110,158 @@ public class SudokuGraphicsProcessor {
         BufferedImage imgSpliced = ImageUtil.splice(img, startX, startY, endX, endY);
         BufferedImage imgBW = ImageUtil.convToBlackWhite(imgSpliced);
 
-        // try {
-        //     ImageIO.write(imgBW,"png",new File("imgBW.png"));
-        // } catch (Exception e) {
-        //     //handle exception
-        // }
-
-        // int width = imgBW.getWidth() / 9;
-        // int height = imgBW.getHeight() / 9;
-
-        // for (int i = 0; i < 9; i++) {
-        //     for (int j = 0; j < 9; j++) {
-        //         BufferedImage indivGridImg = ImageUtil.splice(imgBW, width*i, height*j, width*(i+1),
-        //                 height*(j+1));
-        //         try {
-        //             ImageIO.write(indivGridImg,"png",new File("out/"+i+j+".png"));
-        //             int x = HistogramGenerator.processImage(indivGridImg);
-        //         boxGrid[j][i] = x;
-        //         } catch (Exception e) {
-        //             //handle exception
-        //         }
-                
-        //     }
-        // }
-
-        // // For testing purposes
-        try{
-        File fGrid = new File("=imgBW.png");
-        ImageIO.write(imgBW, "png", fGrid);
-        }catch(IOException e){
-        System.out.println(e);
-        }
-        try{
-        File fGrid = new File("imgSpliced.png");
-        ImageIO.write(imgSpliced, "png", fGrid);
-        }catch(IOException e){
-        System.out.println(e);
-        }
-
         ArrayList<Integer> startPointsX = new ArrayList<Integer>();
         ArrayList<Integer> startPointsY = new ArrayList<Integer>();
         ArrayList<Integer> endPointsX = new ArrayList<Integer>();
         ArrayList<Integer> endPointsY = new ArrayList<Integer>();
 
-        //Finds x end coordinates of each grid
+        // Finds x end coordinates of each grid
         for (int x = 0; x < imgBW.getWidth(); x++) {
 
-        int p = imgBW.getRGB(x,0);
+            int p = imgBW.getRGB(x, 0);
 
-        if (p == blackColor) {
+            if (p == blackColor) {
 
-        endPointsX.add(x - 1);
-        x += 10;
+                endPointsX.add(x - 1);
+                x += 10;
+            }
+
+            if (x == imgBW.getWidth() - 1) {
+
+                endPointsX.add(x);
+
+            }
         }
 
-        if (x == imgBW.getWidth() - 1) {
-
-        endPointsX.add(x);
-
-        }
-        }
-
-        //Finds y end coordinates of each grid
+        // Finds y end coordinates of each grid
         for (int y = 0; y < imgBW.getHeight(); y++) {
 
-        int p = imgBW.getRGB(0,y);
+            int p = imgBW.getRGB(0, y);
 
-        if (p == blackColor) {
+            if (p == blackColor) {
 
-        endPointsY.add(y - 1);
-        y += 10;
+                endPointsY.add(y - 1);
+                y += 10;
+            }
+
+            if (y == imgBW.getHeight() - 1) {
+
+                endPointsY.add(y);
+
+            }
         }
 
-        if (y == imgBW.getHeight() - 1) {
-
-        endPointsY.add(y);
-
-        }
-        }
-
-        //Finds x start coordinates of each grid
+        // Finds x start coordinates of each grid
         for (int x = imgBW.getWidth() - 1; x >= 0; x--) {
 
-        int p = imgBW.getRGB(x,0);
+            int p = imgBW.getRGB(x, 0);
 
-        if (p == blackColor) {
+            if (p == blackColor) {
 
-        startPointsX.add(x + 1);
-        x -= 10;
+                startPointsX.add(x + 1);
+                x -= 10;
+            }
+
+            if (x == 0) {
+
+                startPointsX.add(x);
+
+            }
         }
 
-        if (x == 0) {
-
-        startPointsX.add(x);
-
-        }
-        }
-
-        //Finds y start coordinates of each grid
+        // Finds y start coordinates of each grid
         for (int y = imgBW.getHeight() - 1; y >= 0; y--) {
 
-        int p = imgBW.getRGB(0,y);
+            int p = imgBW.getRGB(0, y);
 
-        if (p == blackColor) {
+            if (p == blackColor) {
 
-        startPointsY.add(y + 1);
-        y -= 10;
+                startPointsY.add(y + 1);
+                y -= 10;
+            }
+
+            if (y == 0) {
+
+                startPointsY.add(y);
+
+            }
         }
 
-        if (y == 0) {
-
-        startPointsY.add(y);
-
-        }
-        }
-
-        //Determines which grid x and y are in
+        // Determines which grid x and y are in
         for (int y = 0; y < imgBW.getHeight(); y++) {
 
-        for (int x = 0; x < imgBW.getWidth(); x++) {
+            for (int x = 0; x < imgBW.getWidth(); x++) {
 
-        int p = imgBW.getRGB(x,y);
-        int xLoc = -1;
-        int yLoc = -1;
-        int gridNum = 0;
-        boolean xIsFound = false;
-        boolean yIsFound = false;
+                int p = imgBW.getRGB(x, y);
+                int xLoc = -1;
+                int yLoc = -1;
+                int gridNum = 0;
+                boolean xIsFound = false;
+                boolean yIsFound = false;
 
-        for (int i = 0; i < 9; i++) {
+                for (int i = 0; i < 9; i++) {
 
-        if (x <= endPointsX.get(i) && !xIsFound && x >= startPointsX.get(8-i)) {
+                    if (x <= endPointsX.get(i) && !xIsFound && x >= startPointsX.get(8 - i)) {
+                        xLoc = i;
+                        xIsFound = true;
+                    }
 
-        xLoc = i;
-        xIsFound = true;
+                    if (y <= endPointsY.get(i) && !yIsFound && y >= startPointsY.get(8 - i)) {
+                        yLoc = i;
+                        yIsFound = true;
+                    }
 
-        }
+                }
+                if (xLoc != -1 && yLoc != -1) {
 
-        if (y <= endPointsY.get(i) && !yIsFound && y >= startPointsY.get(8-i)) {
+                    gridNum = (yLoc * 9) + xLoc;
 
-        yLoc = i;
-        yIsFound = true;
+                    if (!colorsInEachGrid.get(gridNum).contains(p)) {
 
-        }
+                        colorsInEachGrid.get(gridNum).add(p);
+                    }
+                }
 
-        }
-        if (xLoc != -1 && yLoc != -1) {
-
-        gridNum = (yLoc * 9) + xLoc;
-
-        if (!colorsInEachGrid.get(gridNum).contains(p)) {
-
-        colorsInEachGrid.get(gridNum).add(p);
-        }
-        }
-
-        }
+            }
 
         }
 
         for (int i = 0; i < colorsInEachGrid.size(); i++) {
 
-        if (!colorsInEachGrid.get(i).contains(blackColor)) {
-        boxGrid[i / 9][i % 9] = 0;
-        blankGrids.add(i);
+            if (!colorsInEachGrid.get(i).contains(blackColor)) {
+                boxGrid[i / 9][i % 9] = 0;
+                blankGrids.add(i);
 
-        }
+            }
 
         }
         System.out.println("Blank Grids.size(): " + blankGrids.size());
-        //Deletes all previous grid images in this folder (temporary)
-        // File file = new File("/Users/akash/Desktop/GridImgs/");
-        // String[] myFiles;
-        // if (file.isDirectory()) {
-        // myFiles = file.list();
-        // for (int i = 0; i < myFiles.length; i++) {
-        // File myFile = new File(file, myFiles[i]);
-        // myFile.delete();
-        // }
-        // }
 
-        //Used to loop through all the number squares and recognize them
+        // Used to loop through all the number squares and recognize them
         for (int yOverall = 0; yOverall < 9; yOverall++) {
 
-        for (int xOverall = 0; xOverall < 9; xOverall++) {
+            for (int xOverall = 0; xOverall < 9; xOverall++) {
 
-        int xGrid = xOverall;
-        int yGrid = yOverall;
-        int gridNum = (yGrid * 9) + xGrid;
+                int xGrid = xOverall;
+                int yGrid = yOverall;
+                int gridNum = (yGrid * 9) + xGrid;
 
-        if (!blankGrids.contains(gridNum)) {
+                if (!blankGrids.contains(gridNum)) {
 
-        int sPointX = startPointsX.get(startPointsX.size() - 1 - xGrid);
-        int sPointY = startPointsY.get(startPointsY.size() - 1 - yGrid);
+                    int sPointX = startPointsX.get(startPointsX.size() - 1 - xGrid);
+                    int sPointY = startPointsY.get(startPointsY.size() - 1 - yGrid);
 
-        BufferedImage indivGridImg = ImageUtil.splice(imgBW, sPointX, sPointY,
-        endPointsX.get(xGrid), endPointsY.get(yGrid));
-        int x = HistogramGenerator.processImage(indivGridImg);
-        boxGrid[yGrid][xGrid] = x;
-        //write image: not needed (just for testing purposes)
-        // try{
-        // File fGrid = new File("/Users/akash/Desktop/GridImgs/gridImg" + xGrid +
-        // "-" + yGrid + ".png");
-        // ImageIO.write(indivGridImg, "png", fGrid);
+                    BufferedImage indivGridImg = ImageUtil.splice(imgBW, sPointX, sPointY, endPointsX.get(xGrid),
+                            endPointsY.get(yGrid));
+                    int x = HistogramGenerator.processImage(indivGridImg);
+                    boxGrid[yGrid][xGrid] = x;
+                    // write image: not needed (just for testing purposes)
+                }
 
-        // }catch(IOException e){
-        // System.out.println(e);
-        // }
-
-        }
-
-        }
+            }
 
         }
 
         return boxGrid;
-
     }
-
 }

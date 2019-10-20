@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 
 public class SudokuSolver {
@@ -11,20 +10,13 @@ public class SudokuSolver {
 
         ArrayList<Integer> blankGrids = new ArrayList<>();
         for (int y = 0; y < boxGrid.length; y++) {
-
             for (int x = 0; x < boxGrid.length; x++) {
-
                 if (boxGrid[y][x] == 0) {
-
                     blankGrids.add((y * 9) + x);
-
                 }
-
             }
-
         }
         return blankGrids;
-
     }
 
     public static void print() {

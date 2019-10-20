@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
@@ -85,8 +84,6 @@ public class ImageCropper extends JFrame {
                     case "Crop":
                         BufferedImage bi = getCroppedImage();
                         try {
-                            // TEST
-                            ImageIO.write(bi, "png", new File("testOutput.png"));
                             int[][] board = SudokuGraphicsProcessor.parseImage(bi);
                             for (int[] row : board) {
                                 for (int bo : row) {

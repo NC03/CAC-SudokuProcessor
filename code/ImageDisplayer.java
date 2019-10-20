@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.awt.image.*;
 import javax.imageio.ImageIO;
@@ -76,8 +75,9 @@ public class ImageDisplayer extends JFrame {
                             JFileChooser fc = new JFileChooser();
                             fc.setDialogTitle("Save the Image");
                             fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                            if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+                            if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                                 ImageIO.write(inputImage, "png", fc.getSelectedFile());
+                            }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -118,7 +118,6 @@ public class ImageDisplayer extends JFrame {
 
         });
     }
-
 
     public boolean inViewport(int x, int y) {
         int xMin = Math.min(bounds[0][0], bounds[1][0]);
