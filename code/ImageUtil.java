@@ -171,9 +171,10 @@ public class ImageUtil
         System.out.println(colorFreq);
         
         //Removes unnecessary colors from colorsInRow
+        System.out.println(bi.getWidth());
         for (int i = 0; i < colorFreq.size(); i++) {
             
-            if (colorFreq.get(i) >= 50) {
+            if (colorFreq.get(i) >= (int)(bi.getWidth() / 9.5)) {
                 
                 colorFreq.remove(i);
                 colorsInRow.remove(i);
@@ -225,7 +226,7 @@ public class ImageUtil
                 
                 for (int i = 0; i < largerCordInRowSize; i++) {
                     try{
-                        if (x == xCordInRow.get(i) || y == yCordInRow.get(i) || (p < colorIndex0 && colorFreq0 > 70 && colorFreq0 < 180) || p < 100) {
+                        if (x == xCordInRow.get(i) || y == yCordInRow.get(i) || (p < colorIndex0 && colorFreq0 > (int)(bi.getWidth() / 6.786) && colorFreq0 < (int)(bi.getWidth() / 2.639)) || p < 100) {
 
                             out.setRGB(x, y, SudokuGraphicsProcessor.blackColor);
                             break;
