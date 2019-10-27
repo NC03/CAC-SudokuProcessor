@@ -47,7 +47,7 @@ public class ImageDisplayer extends JFrame {
         this.board = b;
         show = true;
         inputImage = bi;
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         setSize(600, 400);
         addMouseMotionListener(new MouseMotionListener() {

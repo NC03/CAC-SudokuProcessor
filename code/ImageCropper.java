@@ -45,7 +45,7 @@ public class ImageCropper extends JFrame {
         super("Image Cropper");
         show = true;
         inputImage = bi;
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         setSize(600, 400);
         addMouseMotionListener(new MouseMotionListener() {
