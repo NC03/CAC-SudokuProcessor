@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Nick
  * @version 1.0
  */
-public class SudokuEntering extends JFrame {
+public class RevealAnswers extends JFrame {
 
     /**
      *
@@ -17,20 +17,23 @@ public class SudokuEntering extends JFrame {
     private static final long serialVersionUID = 1L;
     private int[][] board;
     private int[][][] coordinates;
-    private int selectedIdx = -1;
-    private String[] buttonText = { "Reveal","Solve", "Cancel" };
+    private String[] buttonText = { "Show All", "Quit" };
     private int[][][] buttonCoordinates;
+    private boolean[][] show = new boolean[9][9];
+    private ArrayList<Integer> alreadyInputted;
 
-    public SudokuEntering(int[][] board) {
+    public RevealAnswers(int[][] board, ArrayList<Integer> alreadyInputted) {
         super("Sudoku Solver");
         this.board = board;
-        System.out.println("SudokuEntering");
-        setup();
-    }
-
-    public SudokuEntering() {
-        super("Sudoku Solver");
-        board = new int[9][9];
+        this.alreadyInputted = alreadyInputted;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                show[i][j] = true;
+            }
+        }
+        for (int n : alreadyInputted) {
+            show[n / 9][n % 9] = false;
+        }
         System.out.println("SudokuEntering");
         setup();
     }
@@ -59,48 +62,21 @@ public class SudokuEntering extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 int idx = getIdx(e.getX(), e.getY());
                 if (idx != -1) {
-                    selectedIdx = idx;
-                } else {
-                    selectedIdx = -1;
+                    show[idx / 9][idx % 9] = !show[idx / 9][idx % 9];
                 }
                 int btnIdx = getButtonIdx(e.getX(), e.getY());
                 if (btnIdx != -1) {
                     switch (buttonText[btnIdx]) {
-                    case "Reveal":
-                        try {
-                            System.out.println("Reveal");
-                            ArrayList<Integer> blankGrids = SudokuSolver.findBlankGrids(board);
-                            int[][] solvedBoard = SudokuSolver.solveSudoku(board);
-                            for (int[] row : solvedBoard) {
-                                for (int elem : row) {
-                                    System.out.print(elem);
-                                }
-                                System.out.println();
-                            }
-                            new RevealAnswers(solvedBoard, blankGrids);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                        dispose();
-                        break;
-                    case "Solve":
+                    case "Show All":
                         try {
                             System.out.println("Solve");
-                            ArrayList<Integer> blankGrids = SudokuSolver.findBlankGrids(board);
-                            int[][] solvedBoard = SudokuSolver.solveSudoku(board);
-                            for (int[] row : solvedBoard) {
-                                for (int elem : row) {
-                                    System.out.print(elem);
-                                }
-                                System.out.println();
-                            }
-                            new ImageDisplayer(solvedBoard, CreateFinalBoard.createBoard(solvedBoard, blankGrids));
+                            new ImageDisplayer(board, CreateFinalBoard.createBoard(board, alreadyInputted));
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
                         dispose();
                         break;
-                    case "Cancel":
+                    case "Quit":
                         dispose();
                         break;
                     }
@@ -122,34 +98,10 @@ public class SudokuEntering extends JFrame {
             }
 
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == 37) {
-                    selectedIdx--;
-                } else if (e.getKeyCode() == 38) {
-                    selectedIdx -= 9;
-                } else if (e.getKeyCode() == 39) {
-                    selectedIdx++;
-                } else if (e.getKeyCode() == 40) {
-                    selectedIdx += 9;
-                }
-                if (selectedIdx >= 81) {
-                    selectedIdx -= 81;
-                }
-                if (selectedIdx < 0) {
-                    selectedIdx += 81;
-                }
                 repaint();
             }
 
             public void keyTyped(KeyEvent e) {
-                if (selectedIdx != -1) {
-                    int i = selectedIdx / 9;
-                    int j = selectedIdx % 9;
-                    try {
-                        board[i][j] = Integer.parseInt("" + e.getKeyChar());
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
                 repaint();
             }
         });
@@ -194,11 +146,16 @@ public class SudokuEntering extends JFrame {
             int j = n % 9;
             int x = width / 2 - 4 * dim - dim / 2 + j * dim;
             int y = height / 2 - 4 * dim - dim / 2 + i * dim;
-            g.setColor(new Color(255, 255, 255));
+            g.setColor(new Color(175, 175, 175));
+            for (int a : alreadyInputted) {
+                if (a == n) {
+                    g.setColor(new Color(255, 255, 255));
+                }
+            }
             g.fillRect(x, y, dim, dim);
             g.setColor(new Color(0, 0, 0));
             g.drawRect(x, y, dim, dim);
-            if (board[i][j] != 0) {
+            if (board[i][j] != 0 && show[i][j]) {
                 g.drawString("" + board[i][j], x + dim / 2 - g.getFontMetrics().stringWidth("" + board[i][j]) / 2,
                         y + g.getFontMetrics().getAscent());
             }
@@ -206,12 +163,6 @@ public class SudokuEntering extends JFrame {
             coordinates[n][0][1] = y;
             coordinates[n][1][0] = x + dim;
             coordinates[n][1][1] = y + dim;
-            if (n == selectedIdx) {
-                g.setColor(new Color(255, 180, 0));
-                for (int k = 0; k < 3; k++) {
-                    g.drawOval(x + k, y + k, dim - 2 * k, dim - 2 * k);
-                }
-            }
         }
 
         drawButtons(g);
