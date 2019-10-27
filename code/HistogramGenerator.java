@@ -648,11 +648,6 @@ public class HistogramGenerator {
                 }
             }
         }
-        try {
-            ImageIO.write(bi,"png",new File("testOut/"+num+":"+(int)(Math.random()*1000)+".png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return num;
     }
 
